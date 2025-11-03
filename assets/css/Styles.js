@@ -51,9 +51,10 @@ const styles = StyleSheet.create({
     campos: {
         fontSize: 22,
         color: 'white',
-        marginTop: 32,
+        marginTop: 10,
         fontFamily: 'Regular'
     },
+    
 
     field: {
         borderWidth: 2,

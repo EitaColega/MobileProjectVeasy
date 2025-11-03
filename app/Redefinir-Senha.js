@@ -39,15 +39,7 @@ const index = () => {
                         </View>
                         <View style={styles.forms}>
                             {/* FORMS */}
-                            <Text style={styles.textocontainer}>Registro</Text>
-                            <Text style={styles.campos}> Email: </Text>
-                            <TextInput
-                                style={styles.field}
-                                placeholder="SeuEmail@email.com"
-                                placeholderTextColor="#ccc"
-                                value={emailfield}
-                                onChangeText={setEmailField}
-                            ></TextInput>
+                            <Text style={styles.textocontainer}>Redefinir Senha{'\n\n'}</Text>
                             <Text style={styles.campos}> Senha: </Text>
                             <TextInput
                                 style={[styles.field, { paddingRight: 40 }]}
@@ -83,13 +75,13 @@ const index = () => {
                                 <Text
                                     style={{ fontSize: 16, fontFamily: 'Regular', color: 'white', textAlign: 'center', width: 110, alignSelf: 'center', }}
                                 >
-                                    Registrar
+                                       <Link href={"/Redefinir-Final"} style={{ color: 'white', fontFamily: 'Regular' }}>Confirmar</Link>
+                                    
                                 </Text>
                             </TouchableOpacity>
 
-                            <Text style={{ fontSize: 16, fontFamily: 'Regular', color: 'white', textAlign: 'center', marginTop: 10 }}>
-                                Já tem uma conta?<TouchableOpacity onPress={() => router.back()}>
-                                    <Text style={{ color: "white", fontFamily: "Bold" }}> Entrar</Text>
+                            <Text style={{ fontSize: 16, fontFamily: 'Regular', color: 'white', textAlign: 'center', marginTop: 10 }}><TouchableOpacity onPress={() => router.back()}>
+                                    <Text style={{ color: "white", fontFamily: "Bold" }}> Voltar </Text>
                                 </TouchableOpacity>
                             </Text>
                         </View>
