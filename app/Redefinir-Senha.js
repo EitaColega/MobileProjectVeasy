@@ -39,7 +39,7 @@ const index = () => {
                         </View>
                         <View style={styles.forms}>
                             {/* FORMS */}
-                            <Text style={styles.textocontainer}>Redefinir Senha{'\n\n'}</Text>
+                            <Text style={styles.textocontainer}>Redefinir Senha{'\n'}</Text>
                             <Text style={styles.campos}> Senha: </Text>
                             <TextInput
                                 style={[styles.field, { paddingRight: 40 }]}
@@ -80,10 +80,10 @@ const index = () => {
                                 </Text>
                             </TouchableOpacity>
 
-                            <Text style={{ fontSize: 16, fontFamily: 'Regular', color: 'white', textAlign: 'center', marginTop: 10 }}><TouchableOpacity onPress={() => router.back()}>
-                                    <Text style={{ color: "white", fontFamily: "Bold" }}> Voltar </Text>
+                                <TouchableOpacity onPress={() => router.back()}>
+                                    <Text style={{ color: "white", fontFamily: "Bold", textAlign: "center", marginTop:12, fontSize:16}}> Voltar </Text>
                                 </TouchableOpacity>
-                            </Text>
+
                         </View>
                     </View>
                 </ImageBackground>

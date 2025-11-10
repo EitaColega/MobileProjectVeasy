@@ -38,7 +38,7 @@ const index = () => {
                             <Text style={styles.textocontainer}>Redefinir Senha</Text>
                             <Text style={{ fontSize: 16, fontFamily: 'Regular', color: 'white', textAlign: 'left', marginTop: 30, paddingLeft: 10, }}>Enviaremos um código de 6 dígitos para o email:
                                 GABIRUCORP@GMAIL.COM
-                                insira o código para redefinir sua senha!{'\n'} </Text>
+                                insira o código para redefinir sua senha! </Text>
                                 
                             <Text style={styles.campos}></Text>
                             <TextInput
@@ -58,11 +58,11 @@ const index = () => {
                                 </Text>
                             </TouchableOpacity>
 
-                            <Text style={{ fontSize: 16, fontFamily: 'Regular', color: 'white', textAlign: 'center', marginTop: 10 }}>
+                          
                                 <TouchableOpacity onPress={() => router.back()}>
-                                    <Text style={{ color: "white", fontFamily: "Bold" }}> Voltar </Text>
+                                    <Text style={{ color: "white", fontFamily: "Bold", textAlign: "center", marginTop:15, fontSize:16}}> Voltar </Text>
                                 </TouchableOpacity>
-                            </Text>
+                        
 
 
                         </View>
