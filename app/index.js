@@ -67,11 +67,11 @@ const index = () => {
 								<Text
 									style={{ fontSize: 16, fontFamily: 'Regular', color: 'white', textAlign: 'center' }}
 								>
-									Entrar
+									<Link href={"/Home"} style={{ color: 'white', fontFamily: 'Regular' }}>Entrar</Link>
 								</Text>
 							</TouchableOpacity>
 
-							 <Link href={"/Redefinir-Email"} style={{fontSize: 16, fontFamily: 'Regular', color: 'white', textAlign: 'center', marginTop: 30,color: 'white', fontFamily: 'Bold' }}>Esqueceu a Senha?</Link>
+							<Link href={"/Redefinir-Email"} style={{ fontSize: 16, fontFamily: 'Regular', color: 'white', textAlign: 'center', marginTop: 30, color: 'white', fontFamily: 'Bold' }}>Esqueceu a Senha?</Link>
 
 							<Text style={{ fontSize: 16, fontFamily: 'Regular', color: 'white', textAlign: 'center', marginTop: 30 }}>
 								Não tem conta? <Link href={"/Register"} style={{ color: 'white', fontFamily: 'Bold' }}>Registre-se</Link>

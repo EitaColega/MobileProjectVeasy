@@ -87,11 +87,10 @@ const index = () => {
                                 </Text>
                             </TouchableOpacity>
 
-                            <Text style={{ fontSize: 16, fontFamily: 'Regular', color: 'white', textAlign: 'center', marginTop: 10 }}>
-                                Já tem uma conta?<TouchableOpacity onPress={() => router.back()}>
-                                    <Text style={{ color: "white", fontFamily: "Bold" }}> Entrar</Text>
-                                </TouchableOpacity>
-                            </Text>
+                            <TouchableOpacity onPress={() => router.back()}>
+                                    <Text style={{ color: "white", fontFamily: "Bold", textAlign: "center", marginTop:32, fontSize:16}}><Text style={{ color: "white", fontFamily: "Regular", textAlign: "center", marginTop:32, fontSize:16}}>Já tem uma conta? </Text>Entrar</Text>
+                            </TouchableOpacity>
+                    
                         </View>
                     </View>
                 </ImageBackground>

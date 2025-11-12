@@ -59,13 +59,10 @@ const index = () => {
                                 </Text>
                             </TouchableOpacity>
 
-                            <Text style={{ fontSize: 16, fontFamily: 'Regular', color: 'white', textAlign: 'center', marginTop: 10 }}>
+                           
                                 <TouchableOpacity onPress={() => router.back()}>
-                                    <Text style={{ color: "white", fontFamily: "Bold" }}> Voltar </Text>
+                                    <Text style={{ color: "white", fontFamily: "Bold", textAlign: "center", marginTop:32, fontSize:16}}> Voltar </Text>
                                 </TouchableOpacity>
-                            </Text>
-
-
                         </View>
                     </View>
                 </ImageBackground>
