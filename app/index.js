@@ -67,7 +67,7 @@ const index = () => {
 								<Text
 									style={{ fontSize: 16, fontFamily: 'Regular', color: 'white', textAlign: 'center' }}
 								>
-									<Link href={"/Home"} style={{ color: 'white', fontFamily: 'Regular' }}>Entrar</Link>
+									<Link href={"/HomePlayer"} style={{ color: 'white', fontFamily: 'Regular' }}>Entrar</Link>
 								</Text>
 							</TouchableOpacity>
 

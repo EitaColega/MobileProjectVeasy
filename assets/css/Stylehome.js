@@ -63,6 +63,34 @@ const styleshome = StyleSheet.create({
     color: 'white',
     fontSize: 32,
   },
+  deckercontainer1: {
+    marginTop: 20,
+    marginBottom: 20,
+    alignItems: 'center',
+    backgroundColor: 'rgba(11, 10, 10, 0.47)',
+    width: 360,
+    height: 200,
+    borderColor: '#EEEEEE66',
+    borderWidth: 2,
+    borderRadius: 50,
+    padding: 64,
+    marginBottom: 60,
+  },
+
+  deckercontainer2: {
+    marginTop: 20,
+    marginBottom: 20,
+    alignItems: 'center',
+    backgroundColor: 'rgba(11, 10, 10, 0.47)',
+    width: 360,
+    height: 200,
+    borderColor: '#EEEEEE66',
+    borderWidth: 2,
+    borderRadius: 50,
+    padding: 64,
+    marginBottom: 60,
+  },
+  
 });
 
 export default styleshome;
