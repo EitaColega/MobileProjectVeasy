@@ -10,7 +10,9 @@ export default function RootLayout() {
       <Stack.Screen name="Redefinir-Codigo" options={{ headerShown: false }} />
       <Stack.Screen name="Redefinir-Senha" options={{ headerShown: false }} />
       <Stack.Screen name="Redefinir-Final" options={{ headerShown: false }} />
-      <Stack.Screen name="Home" options={{ headerShown: false }} />
+      <Stack.Screen name="HomePlayer" options={{ headerShown: false }} />
+      <Stack.Screen name="HomeDecker" options={{ headerShown: false }} />
+      <Stack.Screen name="Options" options={{ headerShown: false }} />
     </Stack>
   );
 }
