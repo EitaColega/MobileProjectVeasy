@@ -13,6 +13,7 @@ export default function RootLayout() {
       <Stack.Screen name="HomePlayer" options={{ headerShown: false }} />
       <Stack.Screen name="HomeDecker" options={{ headerShown: false }} />
       <Stack.Screen name="Options" options={{ headerShown: false }} />
+      <Stack.Screen name="RegisterId" options={{ headerShown: false }} />
     </Stack>
   );
 }

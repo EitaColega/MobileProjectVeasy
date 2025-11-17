@@ -1,58 +1,94 @@
-import { ImageBackground, Text, View, TouchableOpacity } from 'react-native';
+import { ImageBackground, Text, View, TouchableOpacity, TextInput } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
-import React from 'react';
+import React, { useState } from 'react';
 import styleshome from '../assets/css/Stylehome';
+import styles from '../assets/css/Styles';
 import { Link } from 'expo-router';
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons } from '@expo/vector-icons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import Feather from 'react-native-vector-icons/Feather';
 
 const homeplayer = require('../assets/background.jpg');
 
 const HomePlayer = () => {
-  return (
-    <SafeAreaProvider>
-      <SafeAreaView style={styleshome.home} edges={['left', 'right']}>
-        <ImageBackground source={homeplayer} style={styleshome.homeimage}>
-          <View style={styleshome.overlay} />
-      
-          <View>
-            <Text style={styleshome.hometext}>Player Search</Text>
-          </View>
+	const [searchQuery, setSearchQuery] = useState('');
 
-          <View style={styleshome.homecontainer} />
+	return (
+		<SafeAreaProvider>
+			<SafeAreaView style={styleshome.home} edges={['left', 'right']}>
+				<ImageBackground source={homeplayer} style={styleshome.homeimage}>
+					<View style={styleshome.overlay} />
 
-          {/* Bottom bar */}
-          <View style={styleshome.bottomBar}>
+					<View>
+						<Text style={styleshome.hometext}>Player Search</Text>
+					</View>
 
-            {/* Cartas */}
-            <Link href="/HomeDecker" asChild>
-              <TouchableOpacity style={{ alignItems: "center" }}>
-              <MaterialCommunityIcons name="cards-outline" size={42} color="white" />
-              </TouchableOpacity>
-            </Link>
+					<View
+						style={{
+							flexDirection: 'row',
+							alignItems: 'center',
+							borderRadius: 50,
+							borderWidth: 2,
+							borderColor: '#EEEEEE66',
+							width: 310,
+							height: 35,
+							paddingHorizontal: 12,
+							marginBottom: 24,
 
-            {/* Player */}
-            <Link href="/HomePlayer" asChild>
-              <TouchableOpacity style={{ alignItems: "center" }}>
-                <Ionicons name="person-circle-outline" size={42} color="#4B1664" />
-              </TouchableOpacity>
-            </Link>
+							shadowColor: '#450693',
+							shadowOffset: { width: 4, height: 4 },
+							shadowOpacity: 0.5,
+							shadowRadius: 5,
+							elevation: 4
+						}}
+					>
+						<TextInput
+							style={{
+								flex: 1,
+								color: '#EEEEEECC',
+								fontFamily: 'Regular',
+								fontSize: 20,
+								textAlign: 'left',
+								padding: 0 // já tem padding no container
+							}}
+							placeholder="Search Players"
+							placeholderTextColor="#EEEEEECC"
+							value={searchQuery}
+							onChangeText={setSearchQuery}
+						/>
 
-            {/* Engrenagem */}
-            <Link href="/Options" asChild>
-              <TouchableOpacity style={{ alignItems: "center" }}>
-                <Ionicons name="settings-outline" size={42} color="white" />
-              </TouchableOpacity>
-            </Link>
+						<Feather name="search" size={20} color="#EEEEEECC" />
+					</View>
+					<View style={styleshome.homecontainer} />
 
-          </View>
+					{/* Bottom bar */}
+					<View style={styleshome.bottomBar}>
+						{/* Cartas */}
+						<Link href="/HomeDecker" asChild>
+							<TouchableOpacity style={{ alignItems: 'center' }}>
+								<MaterialCommunityIcons name="cards-outline" size={42} color="white" />
+							</TouchableOpacity>
+						</Link>
 
+						{/* Player */}
+						<Link href="/HomePlayer" asChild>
+							<TouchableOpacity style={{ alignItems: 'center' }}>
+								<Ionicons name="person-circle-outline" size={42} color="#4B1664" />
+								<Text style={styleshome.FooterName}>Players</Text>
+							</TouchableOpacity>
+						</Link>
 
-        </ImageBackground>
-      </SafeAreaView>
-    </SafeAreaProvider>
-  );
+						{/* Engrenagem */}
+						<Link href="/Options" asChild>
+							<TouchableOpacity style={{ alignItems: 'center' }}>
+								<Ionicons name="settings-outline" size={42} color="white" />
+							</TouchableOpacity>
+						</Link>
+					</View>
+				</ImageBackground>
+			</SafeAreaView>
+		</SafeAreaProvider>
+	);
 };
 
 export default HomePlayer;
-

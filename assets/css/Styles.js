@@ -17,9 +17,9 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center',
         fontFamily: 'Bold',
-    textShadowColor: '#45069399',
-    textShadowOffset: { width: 4, height: 4 }, 
-    textShadowRadius: 5,
+        textShadowColor: '#450693',
+        textShadowOffset: { width: 4, height: 4 }, 
+        textShadowRadius: 5,
     },
     viewcontainer: {
         flex: 1,

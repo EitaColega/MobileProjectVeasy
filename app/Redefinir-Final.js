@@ -8,7 +8,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 
 const image = require('../assets/background.jpg');
 
-const index = () => {
+const RedefinirFinal = () => {
     const [codigofield, setCodigoField] = useState('');
     const [codigo, setCodigo] = useState('');
 
@@ -59,4 +59,4 @@ const index = () => {
     );
 };
 
-export default index;
+export default RedefinirFinal;

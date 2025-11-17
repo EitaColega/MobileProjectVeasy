@@ -8,7 +8,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 
 const image = require('../assets/background.jpg');
 
-const index = () => {
+const RedefinirEmail = () => {
     const [emailfield, setEmailField] = useState('');
     const [email, setEmail] = useState('');
     const [showSenha, setShowSenha] = useState(false);
@@ -71,4 +71,4 @@ const index = () => {
     );
 };
 
-export default index;
+export default RedefinirEmail;
