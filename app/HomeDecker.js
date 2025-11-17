@@ -7,6 +7,7 @@ import { Link, router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
+
 const homedecker = require('../assets/background.jpg');
 
 const HomeDecker = () => {
@@ -51,6 +52,7 @@ const HomeDecker = () => {
 						<Link href="/HomeDecker" asChild>
 							<TouchableOpacity style={{ alignItems: 'center' }}>
 								<MaterialCommunityIcons name="cards-outline" size={42} color="#4B1664" />
+								<Text style={styleshome.FooterName}>Decks</Text>
 							</TouchableOpacity>
 						</Link>
 

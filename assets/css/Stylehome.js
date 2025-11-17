@@ -21,10 +21,10 @@ const styleshome = StyleSheet.create({
         fontSize: 24,
         textAlign: 'center',
         fontFamily: 'Regular',
-        textShadowColor: '#45069399',
+        textShadowColor: '#450693',
         textShadowOffset: { width: 4, height: 4 }, 
         textShadowRadius: 5,
-        bottom: 60, 
+        bottom: 24, 
     },
 
     homecontainer: {
@@ -90,6 +90,23 @@ const styleshome = StyleSheet.create({
     padding: 64,
     marginBottom: 60,
   },
+
+  SearchContainer: {
+    borderColor: '#EEEEEE66',
+    borderWidth: 1.5,
+    borderRadius: 50,
+    width: 310, 
+    alignItems: 'left', 
+    marginBottom: 24,
+    
+  },
+
+  FooterName: {
+    fontFamily: 'Regular', 
+    color: '#FFFFFF', 
+    fontSize: 12, 
+    
+  }
   
 });
 

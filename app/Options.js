@@ -38,6 +38,7 @@ const Options = () => {
             <Link href="/Options" asChild>
               <TouchableOpacity style={{ alignItems: "center" }}>
                 <Ionicons name="settings-outline" size={42} color="#4B1664" />
+                <Text style={styleshome.FooterName}>Options</Text>
               </TouchableOpacity>
             </Link>
 
