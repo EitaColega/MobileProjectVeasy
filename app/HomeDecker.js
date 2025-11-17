@@ -42,7 +42,7 @@ const HomeDecker = () => {
 						}}
 					>
 						{' '}
-						Popular Decks
+						Pro Player Decks
 					</Text>
 					</View>
 

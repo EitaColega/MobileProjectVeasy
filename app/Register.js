@@ -8,7 +8,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 const image = require('../assets/background.jpg');
 
-const index = () => {
+const Register = () => {
     const [emailfield, setEmailField] = useState('');
     const [email, setEmail] = useState('');
     const [confirmfield, setConfirmField] = useState("");
@@ -80,12 +80,12 @@ const index = () => {
                             </TouchableOpacity>
 
                             <TouchableOpacity style={styles.button}>
-                                <Text
-                                    style={{ fontSize: 16, fontFamily: 'Regular', color: 'white', textAlign: 'center', width: 110, alignSelf: 'center', }}
-                                >
-                                    Registrar
-                                </Text>
-                            </TouchableOpacity>
+								<Text
+									style={{ fontSize: 16, fontFamily: 'Regular', color: 'white', textAlign: 'center' }}
+								>
+									<Link href={"/RegisterId"} style={{ color: 'white', fontFamily: 'Regular' }}>Registrar</Link>
+								</Text>
+							</TouchableOpacity>
 
                             <TouchableOpacity onPress={() => router.back()}>
                                     <Text style={{ color: "white", fontFamily: "Bold", textAlign: "center", marginTop:32, fontSize:16}}><Text style={{ color: "white", fontFamily: "Regular", textAlign: "center", marginTop:32, fontSize:16}}>Já tem uma conta? </Text>Entrar</Text>
@@ -99,4 +99,4 @@ const index = () => {
     );
 };
 
-export default index;
+export default Register;
