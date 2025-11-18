@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const API_BASE_URL = "https://api.clashroyale.com/v1";
-const TOKEN = process.env.API_KEY; // substitua pela sua chave da API
+const TOKEN = process.env.API_KEY; 
 
 export async function getPlayerInfo(req, res) {
   try {

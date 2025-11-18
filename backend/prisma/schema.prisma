@@ -1,0 +1,141 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+git
+model Jogador {
+  id_jogador          Int                  @id @default(autoincrement())
+  nome                String
+  nivel               Int
+  trofeus             Int
+  pais                String
+  id_cla              Int?
+  cla                 Cla?                 @relation(fields: [id_cla], references: [id_cla])
+  decks               Deck[]
+  estatistica         Estatistica_Jogador?
+  logs                Log_Acao[]
+  partidas1           Partida[]            @relation("Jogador1")
+  partidas2           Partida[]            @relation("Jogador2")
+  torneios            Torneio_Jogador[]
+}
+
+model Cla {
+  id_cla      Int        @id @default(autoincrement())
+  nome        String
+  descricao   String
+  nivel       Int
+  regiao      String
+  jogadores   Jogador[]
+}
+
+model Deck {
+  id_deck     Int        @id @default(autoincrement())
+  nome        String
+  id_jogador  Int
+  jogador     Jogador    @relation(fields: [id_jogador], references: [id_jogador])
+  cartas      Deck_Carta[]
+}
+
+model Carta {
+  id_carta      Int          @id @default(autoincrement())
+  nome          String
+  tipo          String
+  raridade      String
+  elixir        Int
+  nivel_maximo  Int
+  tipoCartaId   Int?
+  tipoCarta     Tipo_Carta?  @relation(fields: [tipoCartaId], references: [id_tipo])
+  decks         Deck_Carta[]
+}
+
+model Deck_Carta {
+  id_deck     Int
+  id_carta    Int
+  nivel_carta Int
+
+  deck  Deck  @relation(fields: [id_deck], references: [id_deck])
+  carta Carta @relation(fields: [id_carta], references: [id_carta])
+
+  @@id([id_deck, id_carta])
+}
+
+model Partida {
+  id_partida   Int      @id @default(autoincrement())
+  data_hora    DateTime @default(now())
+  resultado    String
+  duracao      Int
+  id_jogador1  Int
+  id_jogador2  Int
+  id_arena     Int
+
+  jogador1 Jogador @relation("Jogador1", fields: [id_jogador1], references: [id_jogador])
+  jogador2 Jogador @relation("Jogador2", fields: [id_jogador2], references: [id_jogador])
+  arena    Arena   @relation(fields: [id_arena], references: [id_arena])
+}
+
+model Arena {
+  id_arena           Int        @id @default(autoincrement())
+  nome               String
+  nivel_minimo       Int
+  trofeus_requeridos Int
+  partidas           Partida[]
+}
+
+model Torneio {
+  id_torneio   Int               @id @default(autoincrement())
+  nome         String
+  premiacao    String
+  data_inicio  DateTime
+  data_fim     DateTime
+  jogadores    Torneio_Jogador[]
+}
+
+model Torneio_Jogador {
+  id_torneio   Int
+  id_jogador   Int
+  colocacao    Int
+  pontuacao    Int
+
+  torneio  Torneio @relation(fields: [id_torneio], references: [id_torneio])
+  jogador  Jogador @relation(fields: [id_jogador], references: [id_jogador])
+
+  @@id([id_torneio, id_jogador])
+}
+
+model Estatistica_Jogador {
+  id_estatistica Int     @id @default(autoincrement())
+  id_jogador     Int     @unique
+  vitorias       Int
+  derrotas       Int
+  empates        Int
+  taxa_vitoria   Float
+  jogador        Jogador @relation(fields: [id_jogador], references: [id_jogador])
+}
+
+model Tipo_Carta {
+  id_tipo     Int      @id @default(autoincrement())
+  nome_tipo   String
+  descricao   String
+  cartas      Carta[]
+}
+
+model Log_Acao {
+  id_log      Int      @id @default(autoincrement())
+  id_jogador  Int
+  acao        String
+  data_hora   DateTime @default(now())
+  detalhes    String
+  jogador     Jogador  @relation(fields: [id_jogador], references: [id_jogador])
+}
+
+model Usuario {
+  id_usuario Int      @id @default(autoincrement())
+  nome       String
+  email      String   @unique
+  senha      String
+  criado_em  DateTime @default(now())
+}
