@@ -11,12 +11,12 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// rota base de teste
+
 app.get("/", (req, res) => {
   res.send("Servidor Express funcionando!");
 });
 
-// rotas da API Clash Royale
+
 app.use("/clash", clashRoutes);
 
 const PORT = 3000;

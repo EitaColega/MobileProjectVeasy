@@ -6,7 +6,7 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
-git
+
 model Jogador {
   id_jogador          Int                  @id @default(autoincrement())
   nome                String
