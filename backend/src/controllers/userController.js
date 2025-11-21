@@ -23,7 +23,7 @@ export const createUsuario = async (req, res) => {
   });
 
   if (usuarioExistente) {
-    return res.status(400).json({ error: "Email já cadastrado" });
+    return res.status(400).json({ error: "Email já está cadastrado" });
   }
 
     // Criptografar senha
