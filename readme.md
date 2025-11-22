@@ -50,7 +50,7 @@ Unir dados de forma organizada para facilitar comparações e estudos de estrat�
 
 [Alessandra Júlia S. Mendonça (01710330)](https://github.com/selessandra)
 
-[Jhonas Xavier dos Santos Silva (01694333)]((https://github.com/Padre-jhon)
+[Jhonas Xavier dos Santos Silva (01694333)](https://github.com/Padre-jhon)
 
 [Pedro Artur R. F. Nogueira (01705061)](https://github.com/Pedro-Artur-RF)
 
