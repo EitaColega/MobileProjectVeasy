@@ -1,6 +1,3 @@
-<p align="center">
-  <img src=""alt="Veasy Logo" width="180"/>
-</p>
 
 ---
 
@@ -46,8 +43,13 @@ Unir dados de forma organizada para facilitar comparações e estudos de estrat�
 
 ## Colaboradores do projeto  
 [Alan Sérgio Rodrigues de Carvalho (01697157)](https://github.com/EitaColega)
+
 [Alessandra Júlia S. Mendonça (01710330)](https://github.com/selessandra)
+
+[Jhonas Xavier dos Santos Silva (01694333)](https://github.com/Padre-jhon)
+
 [Pedro Artur R. F. Nogueira (01705061)](https://github.com/Pedro-Artur-RF)
+
 [Guilherme De Oliveira Lopes Silva (01699872)](https://github.com/GABIRU0800)
 ---
 
