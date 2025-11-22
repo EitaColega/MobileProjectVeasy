@@ -42,7 +42,11 @@ const Register = () => {
         }),
       });
 
-      if (resposta.status === 201) {
+        if (resposta.status === 201) {
+        const usuario = await resposta.json(); // <- pega o usuário criado
+
+        global.usuario = usuario; // <- guarda o usuário GLOBAL
+
         alert("Usuário registrado com sucesso!");
         router.push("/RegisterId");
       } else {
