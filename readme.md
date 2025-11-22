@@ -33,7 +33,8 @@ Jsonwebtoken versão 9.0.2
 Mysql2 versão 3.15.3  
 Prisma versão 6.19.0  
 Sequelize versão 6.37.7  
-"bcrypt" versão "^6.0.0"
+bcrypt versão "^6.0.0"
+express versão "^5.1.0",
 
 ---
 ## Funcionalidades principais  
@@ -48,6 +49,8 @@ Unir dados de forma organizada para facilitar comparações e estudos de estrat�
 [Alan Sérgio Rodrigues de Carvalho (01697157)](https://github.com/EitaColega)
 
 [Alessandra Júlia S. Mendonça (01710330)](https://github.com/selessandra)
+
+[Jhonas Xavier dos Santos Silva (01694333)]((https://github.com/Padre-jhon))
 
 [Pedro Artur R. F. Nogueira (01705061)](https://github.com/Pedro-Artur-RF)
 
