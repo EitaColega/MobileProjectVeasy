@@ -46,9 +46,13 @@ Unir dados de forma organizada para facilitar comparações e estudos de estrat�
 
 ## Colaboradores do projeto  
 [Alan Sérgio Rodrigues de Carvalho (01697157)](https://github.com/EitaColega)
+
 [Alessandra Júlia S. Mendonça (01710330)](https://github.com/selessandra)
+
 [Pedro Artur R. F. Nogueira (01705061)](https://github.com/Pedro-Artur-RF)
+
 [Guilherme De Oliveira Lopes Silva (01699872)](https://github.com/GABIRU0800)
+
 ---
 
 ## Como configurar o projeto  
