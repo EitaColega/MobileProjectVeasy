@@ -76,6 +76,16 @@ const styleshome = StyleSheet.create({
 		marginBottom: 60
 	},
 
+    textplayer:{
+        color: 'white',
+	    fontSize: 24,
+		textAlign: 'rigth', 
+		fontFamily: 'Regular',
+		padding: 20,
+		marginTop: -40,
+		width: "160%"
+    },
+
 	deckercontainer2: {
 		marginTop: 20,
 		marginBottom: 20,

@@ -1,94 +1,134 @@
-import { ImageBackground, Text, View, TouchableOpacity, TextInput } from 'react-native';
+import { ImageBackground, Text, View, TouchableOpacity } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styleshome from '../assets/css/Stylehome';
-import styles from '../assets/css/Styles';
 import { Link } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons } from "@expo/vector-icons";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import Feather from 'react-native-vector-icons/Feather';
 
 const homeplayer = require('../assets/background.jpg');
 
 const HomePlayer = () => {
-	const [searchQuery, setSearchQuery] = useState('');
 
-	return (
-		<SafeAreaProvider>
-			<SafeAreaView style={styleshome.home} edges={['left', 'right']}>
-				<ImageBackground source={homeplayer} style={styleshome.homeimage}>
-					<View style={styleshome.overlay} />
+  const [name, setName] = useState('');
+  const [clanName, setClanName] = useState('');
+  const [trofeus, setTrofeus] = useState('');
+  const [topTrofeus, setTopTrofeus] = useState('');
 
-					<View>
-						<Text style={styleshome.hometext}>Player Search</Text>
-					</View>
+//testando espaçamento 
+  useEffect(() => {
+    setName("Gabiru");
+    setClanName("CORP");
+    setTrofeus("9999");
+    setTopTrofeus("9999");
+    
+  }, []);
 
-					<View
-						style={{
-							flexDirection: 'row',
-							alignItems: 'center',
-							borderRadius: 50,
-							borderWidth: 2,
-							borderColor: '#EEEEEE66',
-							width: 310,
-							height: 35,
-							paddingHorizontal: 12,
-							marginBottom: 24,
+  return (
+    <SafeAreaProvider>
+      <SafeAreaView style={styleshome.home} edges={['left', 'right']}>
+        <ImageBackground source={homeplayer} style={styleshome.homeimage}>
+          <View style={styleshome.overlay} />
+		  	
+          <View>
+            <Text style={styleshome.hometext}>Player Search</Text>
+          </View>
 
-							shadowColor: '#450693',
-							shadowOffset: { width: 4, height: 4 },
-							shadowOpacity: 0.5,
-							shadowRadius: 5,
-							elevation: 4
-						}}
-					>
-						<TextInput
-							style={{
-								flex: 1,
-								color: '#EEEEEECC',
-								fontFamily: 'Regular',
-								fontSize: 20,
-								textAlign: 'left',
-								padding: 0 // já tem padding no container
-							}}
-							placeholder="Search Players"
-							placeholderTextColor="#EEEEEECC"
-							value={searchQuery}
-							onChangeText={setSearchQuery}
-						/>
+          
+          <View 
+            style={{
+              ...styleshome.homecontainer,
+              justifyContent: "top",
+              alignItems: "center",
+			  paddingTop: 10
+            }}
+          >
 
-						<Feather name="search" size={20} color="#EEEEEECC" />
-					</View>
-					<View style={styleshome.homecontainer} />
+            <Ionicons name="person-circle-outline" size={120} color="white" />
 
-					{/* Bottom bar */}
-					<View style={styleshome.bottomBar}>
-						{/* Cartas */}
-						<Link href="/HomeDecker" asChild>
-							<TouchableOpacity style={{ alignItems: 'center' }}>
-								<MaterialCommunityIcons name="cards-outline" size={42} color="white" />
-							</TouchableOpacity>
-						</Link>
+            {/* info-player*/}
+            <Text style={{
+              color: 'white',
+              fontSize: 24,
+              textAlign: 'left',
+              fontFamily: 'Regular',
+              padding: 20,
+              marginTop: -40,
+            }}>
+              {'\n'}{name}
+            </Text>
 
-						{/* Player */}
-						<Link href="/HomePlayer" asChild>
-							<TouchableOpacity style={{ alignItems: 'center' }}>
-								<Ionicons name="person-circle-outline" size={42} color="#4B1664" />
-								<Text style={styleshome.FooterName}>Players</Text>
-							</TouchableOpacity>
-						</Link>
+            <Text style={{
+              color: 'white',
+              fontSize: 24,
+              textAlign: 'left',
+              fontFamily: 'Regular',
+              padding: 20,
+              marginTop: -40,
+            }}>
+            	Clã:{clanName}
+            </Text>
 
-						{/* Engrenagem */}
-						<Link href="/Options" asChild>
-							<TouchableOpacity style={{ alignItems: 'center' }}>
-								<Ionicons name="settings-outline" size={42} color="white" />
-							</TouchableOpacity>
-						</Link>
-					</View>
-				</ImageBackground>
-			</SafeAreaView>
-		</SafeAreaProvider>
-	);
+            <Text style={styleshome.textplayer}>
+              {'\n'}Troféus: {trofeus}
+            </Text>
+
+            <Text style={styleshome.textplayer}>
+              Top Troféus: {topTrofeus}
+            </Text>
+
+            <Text style={styleshome.textplayer}>
+              {'\n'}Top Deks: 
+            </Text>
+			
+			<View style={{
+				marginTop: -20,
+				marginBottom: 20,
+				alignItems: 'center',
+				backgroundColor: 'rgba(11, 10, 10, 0.47)',
+				width: 330,
+				height: 200,
+				borderColor: '#EEEEEE66',
+				borderWidth: 2,
+				borderRadius: 50,
+				padding: 64,
+				marginBottom: 60}}>
+				
+			</View>	
+
+          </View>
+			
+
+          {/* Bottom bar */}
+          <View style={styleshome.bottomBar}>
+
+            {/* Cartas */}
+            <Link href="/HomeDecker" asChild>
+              <TouchableOpacity style={{ alignItems: "center" }}>
+                <MaterialCommunityIcons name="cards-outline" size={42} color="white" />
+              </TouchableOpacity>
+            </Link>
+
+            {/* Player */}
+            <Link href="/HomePlayer" asChild>
+              <TouchableOpacity style={{ alignItems: "center" }}>
+                <Ionicons name="person-circle-outline" size={42} color="#4B1664" />
+              </TouchableOpacity>
+            </Link>
+
+            {/* Engrenagem */}
+            <Link href="/Options" asChild>
+              <TouchableOpacity style={{ alignItems: "center" }}>
+                <Ionicons name="settings-outline" size={42} color="white" />
+              </TouchableOpacity>
+            </Link>
+
+          </View>
+
+        </ImageBackground>
+      </SafeAreaView>
+    </SafeAreaProvider>
+  );
 };
 
 export default HomePlayer;
