@@ -42,9 +42,11 @@ const Register = () => {
         }),
       });
 
-      const data = await resposta.json();
+        if (resposta.status === 201) {
+        const usuario = await resposta.json(); // <- pega o usuário criado
 
-      if (resposta.status === 201) {
+        global.usuario = usuario; // <- guarda o usuário GLOBAL
+
         alert("Usuário registrado com sucesso!");
         router.push("/RegisterId");
       } else if (resposta.status === 400 && data.error === "Email já está cadastrado") {

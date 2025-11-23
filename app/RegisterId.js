@@ -1,69 +1,82 @@
-import { ImageBackground, StyleSheet, Text, View, TextInput, Button, TouchableOpacity, Pressable } from 'react-native';
+import { ImageBackground, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import React, { useState } from 'react';
 import { useFonts } from 'expo-font';
 import styles from '../assets/css/Styles';
-import { Link, router } from 'expo-router';
+import { router } from 'expo-router';
 import { Ionicons } from "@expo/vector-icons";
+import axios from "axios";
 
-const image = require('../assets/background.jpg');
+const API_URL = process.env.EXPO_PUBLIC_API_URL;
 
 const RegisterId = () => {
-    const [idfield, setIdField] = useState('');
-    const [id, setId] = useState('');
+    const [clashId, setClashId] = useState('');
+    const [loading, setLoading] = useState(false);
 
-    const [nicknamefield, setNickNameField] = useState('');
-    const [Nickname, setNickName] = useState('');
+    // ⚠️ usuário salvo globalmente na tela Register!
+    const idUsuario = global.usuario?.id_usuario;
 
-  
+    const handleRegisterId = async () => {
+        if (!clashId.trim()) return alert("Digite seu ID do Clash Royale!");
+        if (!idUsuario) return alert("Erro: usuário não encontrado. Faça o login novamente.");
 
-    const handleRegister = () => {
-        router.push('/Register');
+        try {
+            setLoading(true);
+
+            const resp = await axios.post(`${API_URL}/jogador/cadastrar`, {
+                idUsuario,
+                clashId
+            });
+
+            // atualiza os dados do usuário com o nome real
+            global.usuario.nome = resp.data.nome;
+
+            alert("Jogador cadastrado com sucesso!");
+            router.push('/HomePlayer');
+        } catch (err) {
+            if (err.response?.data?.error) alert(err.response.data.error);
+            else alert("Erro ao cadastrar jogador!");
+        }
+
+        setLoading(false);
     };
 
     const [fontsLoaded] = useFonts({
         Regular: require('../assets/fonts/Poppins-Medium.ttf'),
         Bold: require('../assets/fonts/Poppins-ExtraBold.ttf')
-
     });
 
     return (
         <SafeAreaProvider>
-            <SafeAreaView style={styles.container} edges={['left', 'right']}>
-                <ImageBackground source={image} style={styles.image}>
+            <SafeAreaView style={styles.container}>
+                <ImageBackground source={require('../assets/background.jpg')} style={styles.image}>
                     <View style={styles.viewcontainer}>
-                        {/* CONTAINER  */}
+
                         <View style={styles.header}>
-                            {/*HEADER */}
                             <Text style={styles.text}>Veasy</Text>
                         </View>
+
                         <View style={styles.forms}>
-                            {/* FORMS */}
                             <Text style={styles.textocontainer}>Registro</Text>
-                            <Text style={styles.campos}> Clash Id: </Text>
+
+                            <Text style={styles.campos}>Clash Id:</Text>
                             <TextInput
                                 style={styles.field}
-                                placeholder="coloque o id do clash"
+                                placeholder="JGCUU99V2"
                                 placeholderTextColor="#ccc"
-                                value={idfield}
-                                onChangeText={setIdField}
-                            ></TextInput>
-                            <Text style={styles.campos}> Nickname: </Text>
-                            <TextInput
-                                style={[styles.field, { paddingRight: 40 }]}
-                                placeholder="nickname"
-                                placeholderTextColor="#ccc"
-                                value={nicknamefield}
-                                onChangeText={setNickName}
+                                value={clashId}
+                                onChangeText={setClashId}
                             />
 
-                             <TouchableOpacity style={[styles.button, {marginTop: 64}]}>
-								<Text
-									style={{ fontSize: 16, fontFamily: 'Regular', color: 'white', textAlign: 'center'}}
-								>
-									<Link href={"/HomePlayer"} style={{ color: 'white', fontFamily: 'Regular' }}>Entrar</Link>
-								</Text>
-							</TouchableOpacity>
+                            <TouchableOpacity
+                                style={[styles.button, { marginTop: 64 }]}
+                                onPress={handleRegisterId}
+                                disabled={loading}
+                            >
+                                <Text style={{ fontSize: 16, fontFamily: 'Regular', color: 'white', textAlign: 'center' }}>
+                                    {loading ? "Validando..." : "Confirmar"}
+                                </Text>
+                            </TouchableOpacity>
                         </View>
                     </View>
                 </ImageBackground>
