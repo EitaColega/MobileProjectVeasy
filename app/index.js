@@ -1,30 +1,56 @@
-import { ImageBackground, StyleSheet, Text, View, TextInput, Button, TouchableOpacity, Pressable } from 'react-native';
+import { ImageBackground, StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import React, { useState } from 'react';
 import { useFonts } from 'expo-font';
 import styles from '../assets/css/Styles';
 import { Link, router } from 'expo-router';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import api from "../services/api";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const image = require('../assets/background.jpg');
 
 const index = () => {
 	const [emailfield, setEmailField] = useState('');
-	const [email, setEmail] = useState('');
-	const [showSenha, setShowSenha] = useState(false);
-
 	const [senhafield, setSenhaField] = useState('');
-	const [senha, setSenha] = useState('');
+	const [showSenha, setShowSenha] = useState(false);
 
 	const handleRegister = () => {
 		router.push('/Register');
+	};
 
+	// 🔵 ADICIONE A FUNÇÃO handleLogin AQUI
+	const handleLogin = async () => {
+		if (!emailfield || !senhafield) {
+			alert("Preencha email e senha!");
+			return;
+		}
+
+		try {
+			const response = await api.post("/usuarios/login", {
+				email: emailfield,
+				senha: senhafield
+			});
+
+			const { token, user } = response.data;
+
+			// Salva no celular
+			await AsyncStorage.setItem("token", token);
+			await AsyncStorage.setItem("usuario", JSON.stringify(user));
+
+			alert("Login realizado com sucesso!");
+			router.push("/HomePlayer");  // Redireciona
+
+		} catch (err) {
+			if (err.response?.status === 404) return alert("Usuário não encontrado");
+			if (err.response?.status === 401) return alert("Senha incorreta");
+			alert("Erro ao realizar login");
+		}
 	};
 
 	const [fontsLoaded] = useFonts({
 		Regular: require('../assets/fonts/Poppins-Medium.ttf'),
 		Bold: require('../assets/fonts/Poppins-ExtraBold.ttf')
-
 	});
 
 	return (
@@ -63,11 +89,13 @@ const index = () => {
 							>
 								<Ionicons name={showSenha ? "eye-off" : "eye"} size={24} color="#ccc" />
 							</TouchableOpacity>
-							<TouchableOpacity style={styles.button}>
+							
+							{/* 🔵 TROQUE O BOTÃO ENTRAR POR ESTE: */}
+							<TouchableOpacity style={styles.button} onPress={handleLogin}>
 								<Text
 									style={{ fontSize: 16, fontFamily: 'Regular', color: 'white', textAlign: 'center' }}
 								>
-									<Link href={"/HomePlayer"} style={{ color: 'white', fontFamily: 'Regular' }}>Entrar</Link>
+									Entrar
 								</Text>
 							</TouchableOpacity>
 
