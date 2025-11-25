@@ -1,6 +1,6 @@
 import { ImageBackground, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useFonts } from 'expo-font';
 import styles from '../assets/css/Styles';
 import { router } from 'expo-router';
@@ -9,6 +9,10 @@ import api from '../services/api'; // 👈 IMPORTANTE
 const image = require('../assets/background.jpg');
 
 const RedefinirEmail = () => {
+    useEffect(() => {
+        document.title = "Redefinir Email";
+    }, []);
+    
     const [email, setEmail] = useState('');
 
     const [fontsLoaded] = useFonts({

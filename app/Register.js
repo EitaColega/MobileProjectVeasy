@@ -1,6 +1,6 @@
 import { ImageBackground, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useFonts } from 'expo-font';
 import styles from '../assets/css/Styles';
 import { router } from 'expo-router';
@@ -8,10 +8,13 @@ import { Ionicons } from "@expo/vector-icons";
 
 const API_URL = process.env.EXPO_PUBLIC_API_URL;
 
-
 const image = require('../assets/background.jpg');
 
 const Register = () => {
+  useEffect(() => {
+    document.title = "Registrar";
+  }, []);
+
   const [emailfield, setEmailField] = useState('');
   const [senhafield, setSenhaField] = useState('');
   const [confirmfield, setConfirmField] = useState('');
@@ -19,6 +22,7 @@ const Register = () => {
   const [showConfirm, setShowConfirm] = useState(false);
 
   const registrarUsuario = async () => {
+    
     if (!emailfield || !senhafield || !confirmfield) {
       alert("Preencha todos os campos!");
       return;

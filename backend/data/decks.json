@@ -1,0 +1,89 @@
+{
+    "date": "2025-11-25",
+    "deck": {
+        "deck_id": "deck_28000001-28000015-28000000-26000057-27000012-26000059-26000047-26000052_container",
+        "data_name": "arrows,barbarian-barrel,fireball,flying-machine,goblin-cage-ev1,royal-hogs,royal-recruits-ev1,zappies",
+        "name_desktop": "RHogs EvoRR FM Zappies",
+        "name_mobile": "RHogs EvoRR FM Zappies",
+        "cards": [
+            {
+                "alt": "Goblin Cage",
+                "card_key": "goblin-cage-ev1",
+                "image": "https://cdns3.royaleapi.com/cdn-cgi/image/w=150,h=180,format=auto/static/img/cards/v8-7d088998/goblin-cage-ev1.png"
+            },
+            {
+                "alt": "Royal Recruits",
+                "card_key": "royal-recruits-ev1",
+                "image": "https://cdns3.royaleapi.com/cdn-cgi/image/w=150,h=180,format=auto/static/img/cards/v8-7d088998/royal-recruits-ev1.png"
+            },
+            {
+                "alt": "Royal Hogs",
+                "card_key": "royal-hogs",
+                "image": "https://cdns3.royaleapi.com/cdn-cgi/image/w=150,h=180,format=auto/static/img/cards/v8-7d088998/royal-hogs.png"
+            },
+            {
+                "alt": "Flying Machine",
+                "card_key": "flying-machine",
+                "image": "https://cdns3.royaleapi.com/cdn-cgi/image/w=150,h=180,format=auto/static/img/cards/v8-7d088998/flying-machine.png"
+            },
+            {
+                "alt": "Fireball",
+                "card_key": "fireball",
+                "image": "https://cdns3.royaleapi.com/cdn-cgi/image/w=150,h=180,format=auto/static/img/cards/v8-7d088998/fireball.png"
+            },
+            {
+                "alt": "Zappies",
+                "card_key": "zappies",
+                "image": "https://cdns3.royaleapi.com/cdn-cgi/image/w=150,h=180,format=auto/static/img/cards/v8-7d088998/zappies.png"
+            },
+            {
+                "alt": "Arrows",
+                "card_key": "arrows",
+                "image": "https://cdns3.royaleapi.com/cdn-cgi/image/w=150,h=180,format=auto/static/img/cards/v8-7d088998/arrows.png"
+            },
+            {
+                "alt": "Barbarian Barrel",
+                "card_key": "barbarian-barrel",
+                "image": "https://cdns3.royaleapi.com/cdn-cgi/image/w=150,h=180,format=auto/static/img/cards/v8-7d088998/barbarian-barrel.png"
+            }
+        ],
+        "copy_link": "https://link.clashroyale.com/en?clashroyale://copyDeck?deck=27000012;26000047;26000059;26000057;28000000;26000052;28000001;28000015&tt=159000000&l=Royals",
+        "qr_code": "clashroyale://copyDeck?deck=27000012;26000047;26000059;26000057;28000000;26000052;28000001;28000015&tt=159000000&l=Royals",
+        "follow_button": {
+            "action": "follow",
+            "category": "deck",
+            "name": "arrows,barbarian-barrel,fireball,flying-machine,goblin-cage-ev1,royal-hogs,royal-recruits-ev1,zappies"
+        },
+        "usage_percent_label": "0.2% 1",
+        "usage_absolute_label": "1",
+        "avg_elixir": "Avg Elixir  4.1",
+        "four_card_cycle": "4-Card Cycle  13.0",
+        "mobile_table": {
+            "rating": "63",
+            "usage_absolute": "5859",
+            "wins_percent": "57.0%",
+            "draw_percent": "0.1%",
+            "loss_percent": "42.9%"
+        },
+        "desktop_table": {
+            "rating": "63",
+            "usage_percent": "0.2%",
+            "wins_percent": "57.0%",
+            "draw_percent": "0.1%",
+            "loss_percent": "42.9%",
+            "usage_absolute": "5,859",
+            "wins_absolute": "3,341",
+            "draw_absolute": "3",
+            "loss_absolute": "2,515"
+        },
+        "win_rate_bars": {
+            "wins_pc": "57",
+            "loss_pc": "43"
+        },
+        "top_player": {
+            "player_name": "Shmuel_sw白影",
+            "trophies": "15995",
+            "profile_url": "/player/YVCQGLLL8"
+        }
+    }
+}

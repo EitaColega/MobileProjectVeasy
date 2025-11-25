@@ -1,6 +1,6 @@
 import { ImageBackground, Text, View, TextInput, TouchableOpacity, Alert } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useFonts } from "expo-font";
 import styles from "../assets/css/Styles";
 import { useLocalSearchParams, router } from "expo-router";
@@ -10,9 +10,12 @@ import api from "../services/api";
 const image = require("../assets/background.jpg");
 
 const RedefinirSenha = () => {
+    useEffect(() => {
+        document.title = "Recuperar Senha";
+    }, []);
+    
     const [senha, setSenha] = useState("");
     const [confirmSenha, setConfirmSenha] = useState("");
-
     const [showSenha, setShowSenha] = useState(false);
     const [showConfirm, setShowConfirm] = useState(false);
 
