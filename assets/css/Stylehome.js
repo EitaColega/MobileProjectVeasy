@@ -82,7 +82,7 @@ const styleshome = StyleSheet.create({
 		textAlign: 'rigth', 
 		fontFamily: 'Regular',
 		padding: 20,
-		marginTop: -40,
+		marginTop: -65,
 		width: "160%"
     },
 

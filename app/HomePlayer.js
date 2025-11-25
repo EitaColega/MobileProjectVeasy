@@ -53,7 +53,7 @@ const HomePlayer = () => {
               textAlign: 'left',
               fontFamily: 'Regular',
               padding: 20,
-              marginTop: -40,
+              marginTop: -55,
             }}>
               {'\n'}{name}
             </Text>
@@ -70,19 +70,19 @@ const HomePlayer = () => {
             </Text>
 
             <Text style={styleshome.textplayer}>
-              {'\n'}Troféus: {trofeus}
+              {'\n'}  {'\n'}Troféus: {trofeus}
             </Text>
 
             <Text style={styleshome.textplayer}>
-              Top Troféus: {topTrofeus}
+              {'\n'}Top Troféus: {topTrofeus}
             </Text>
 
             <Text style={styleshome.textplayer}>
-              {'\n'}Top Deks: 
+              {'\n'}  {'\n'}Top Deks: 
             </Text>
 			
 			<View style={{
-				marginTop: -20,
+				marginTop: -10,
 				marginBottom: 20,
 				alignItems: 'center',
 				backgroundColor: 'rgba(11, 10, 10, 0.47)',
