@@ -10,7 +10,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const image = require('../assets/background.jpg');
 
-const index = () => {   // <--- AQUI ABRE A FUNÇÃO! NÃO FECHAR AGORA
+const index = () => {  
 
 	const [emailfield, setEmailField] = useState('');
 	const [senhafield, setSenhaField] = useState('');
