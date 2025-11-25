@@ -9,9 +9,7 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 const homeplayer = require('../assets/background.jpg');
 
 const HomePlayer = () => {
-	useEffect(() => {
-			document.title = "Home Player";
-	}, []);
+  
 	const [searchQuery, setSearchQuery] = useState('');
 
   const [name, setName] = useState('');

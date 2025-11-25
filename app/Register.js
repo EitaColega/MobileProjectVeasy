@@ -11,10 +11,7 @@ const API_URL = process.env.EXPO_PUBLIC_API_URL;
 const image = require('../assets/background.jpg');
 
 const Register = () => {
-  useEffect(() => {
-    document.title = "Registrar";
-  }, []);
-
+  
   const [emailfield, setEmailField] = useState('');
   const [senhafield, setSenhaField] = useState('');
   const [confirmfield, setConfirmField] = useState('');

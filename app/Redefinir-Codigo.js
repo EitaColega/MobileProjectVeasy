@@ -8,11 +8,8 @@ import api from "../services/api";
 
 const image = require("../assets/background.jpg");
 
-const RedefinirCodigo = () => {
-    useEffect(() => {
-        document.title = "Código de Redefinição";
-    }, []);
-
+const RedefinirCodigo = () => { 
+    
     const [token, setToken] = useState("");
     const { email } = useLocalSearchParams(); // 👈 Email vindo da tela anterior
 

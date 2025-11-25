@@ -8,10 +8,8 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
 const options = require('../assets/background.jpg');
 
-const Options = () => {
-	useEffect(() => {
-		document.title = "Configurações";
-	  }, []);
+const Options = () => { 
+	
 	return (
 		<SafeAreaProvider>
 			<SafeAreaView style={styleshome.home} edges={['left', 'right']}>

@@ -10,9 +10,6 @@ import api from "../services/api";
 const image = require("../assets/background.jpg");
 
 const RedefinirSenha = () => {
-    useEffect(() => {
-        document.title = "Recuperar Senha";
-    }, []);
     
     const [senha, setSenha] = useState("");
     const [confirmSenha, setConfirmSenha] = useState("");

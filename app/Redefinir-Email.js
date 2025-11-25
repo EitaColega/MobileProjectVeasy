@@ -9,9 +9,6 @@ import api from '../services/api'; // 👈 IMPORTANTE
 const image = require('../assets/background.jpg');
 
 const RedefinirEmail = () => {
-    useEffect(() => {
-        document.title = "Redefinir Email";
-    }, []);
     
     const [email, setEmail] = useState('');
 

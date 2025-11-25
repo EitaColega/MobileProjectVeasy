@@ -9,10 +9,7 @@ import axios from "axios";
 const API_URL = process.env.EXPO_PUBLIC_API_URL;
 
 const RegisterId = () => {
-    useEffect(() => {
-        document.title = "Registro ID";
-      }, []);
-
+    
     const [clashId, setClashId] = useState('');
     const [loading, setLoading] = useState(false);
 

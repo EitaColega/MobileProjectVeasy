@@ -18,10 +18,7 @@ import DeckList from "./components/DeckList";
 const homedecker = require("../assets/background.jpg");
 
 const HomeDecker = () => {
-  useEffect(() => {
-    document.title = "Decks";
-  }, []);
-
+  
   // Carrosel 1 - Para Decks Populares
   const [index1, setIndex1] = useState(0);
   const translateX1 = useRef(new Animated.Value(0)).current;
