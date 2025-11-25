@@ -1,6 +1,6 @@
 import { ImageBackground, StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useFonts } from 'expo-font';
 import styles from '../assets/css/Styles';
 import { Link, router } from 'expo-router';
@@ -11,6 +11,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const image = require('../assets/background.jpg');
 
 const index = () => {
+	useEffect(() => {
+			document.title = "Veasy Royal";
+	}, []);
+	
 	const [emailfield, setEmailField] = useState('');
 	const [senhafield, setSenhaField] = useState('');
 	const [showSenha, setShowSenha] = useState(false);

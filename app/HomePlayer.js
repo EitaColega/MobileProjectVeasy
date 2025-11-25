@@ -1,8 +1,7 @@
 import { ImageBackground, Text, View, TouchableOpacity, TextInput } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styleshome from '../assets/css/Stylehome';
-import styles from '../assets/css/Styles';
 import { Link } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
@@ -11,6 +10,9 @@ import Feather from 'react-native-vector-icons/Feather';
 const homeplayer = require('../assets/background.jpg');
 
 const HomePlayer = () => {
+	useEffect(() => {
+			document.title = "Home Player";
+	}, []);
 	const [searchQuery, setSearchQuery] = useState('');
 
 	return (

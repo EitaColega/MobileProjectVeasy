@@ -1,14 +1,16 @@
-import { ImageBackground, StyleSheet, Text, View, TextInput, Button, TouchableOpacity, Pressable } from 'react-native';
+import { ImageBackground, Text, View, TouchableOpacity } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useFonts } from 'expo-font';
 import styles from '../assets/css/Styles';
-import { Link, router } from 'expo-router';
-import Ionicons from '@expo/vector-icons/Ionicons';
+import { router } from 'expo-router';
 
 const image = require('../assets/background.jpg');
 
 const RedefinirFinal = () => {
+    useEffect(() => {
+        document.title = "Redefinir Senha";
+      }, []);
     const [codigofield, setCodigoField] = useState('');
     const [codigo, setCodigo] = useState('');
 

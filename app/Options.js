@@ -1,6 +1,6 @@
 import { ImageBackground, Text, View, TouchableOpacity } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
-import React from 'react';
+import React, { useEffect } from 'react';
 import styleshome from '../assets/css/Stylehome';
 import { Link } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
@@ -9,6 +9,9 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 const options = require('../assets/background.jpg');
 
 const Options = () => {
+	useEffect(() => {
+		document.title = "Configurações";
+	  }, []);
 	return (
 		<SafeAreaProvider>
 			<SafeAreaView style={styleshome.home} edges={['left', 'right']}>

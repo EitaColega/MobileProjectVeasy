@@ -1,19 +1,24 @@
 // app/_layout.js
-import { Stack } from 'expo-router';
+import { Stack } from "expo-router";
+import React from "react";
 
 export default function RootLayout() {
   return (
-    <Stack>
-      <Stack.Screen name="index" options={{ headerShown: false }} />
-      <Stack.Screen name="Register" options={{ headerShown: false }} />
-      <Stack.Screen name="Redefinir-Email" options={{ headerShown: false }} />
-      <Stack.Screen name="Redefinir-Codigo" options={{ headerShown: false }} />
-      <Stack.Screen name="Redefinir-Senha" options={{ headerShown: false }} />
-      <Stack.Screen name="Redefinir-Final" options={{ headerShown: false }} />
-      <Stack.Screen name="HomePlayer" options={{ headerShown: false }} />
-      <Stack.Screen name="HomeDecker" options={{ headerShown: false }} />
-      <Stack.Screen name="Options" options={{ headerShown: false }} />
-      <Stack.Screen name="RegisterId" options={{ headerShown: false }} />
+    <Stack 
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Stack.Screen name="index" />
+      <Stack.Screen name="Register" />
+      <Stack.Screen name="Redefinir-Email" />
+      <Stack.Screen name="Redefinir-Codigo" />
+      <Stack.Screen name="Redefinir-Senha" />
+      <Stack.Screen name="Redefinir-Final" />
+      <Stack.Screen name="HomePlayer" />
+      <Stack.Screen name="HomeDecker" />
+      <Stack.Screen name="Options" />
+      <Stack.Screen name="RegisterId" />
     </Stack>
   );
 }

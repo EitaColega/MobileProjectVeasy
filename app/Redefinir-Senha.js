@@ -1,6 +1,6 @@
 import { ImageBackground, StyleSheet, Text, View, TextInput, Button, TouchableOpacity, Pressable } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useFonts } from 'expo-font';
 import styles from '../assets/css/Styles';
 import { Link, router } from 'expo-router';
@@ -9,6 +9,9 @@ import { Ionicons } from "@expo/vector-icons";
 const image = require('../assets/background.jpg');
 
 const RedefinirSenha = () => {
+    useEffect(() => {
+        document.title = "Recuperar Senha";
+      }, []);
     const [emailfield, setEmailField] = useState('');
     const [email, setEmail] = useState('');
     const [confirmfield, setConfirmField] = useState("");
