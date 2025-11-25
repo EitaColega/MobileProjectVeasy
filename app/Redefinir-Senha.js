@@ -1,52 +1,74 @@
-import { ImageBackground, StyleSheet, Text, View, TextInput, Button, TouchableOpacity, Pressable } from 'react-native';
-import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
-import React, { useState } from 'react';
-import { useFonts } from 'expo-font';
-import styles from '../assets/css/Styles';
-import { Link, router } from 'expo-router';
+import { ImageBackground, Text, View, TextInput, TouchableOpacity, Alert } from "react-native";
+import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
+import React, { useState } from "react";
+import { useFonts } from "expo-font";
+import styles from "../assets/css/Styles";
+import { useLocalSearchParams, router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
+import api from "../services/api";
 
-const image = require('../assets/background.jpg');
+const image = require("../assets/background.jpg");
 
 const RedefinirSenha = () => {
-    const [emailfield, setEmailField] = useState('');
-    const [email, setEmail] = useState('');
-    const [confirmfield, setConfirmField] = useState("");
-    const [senhafield, setSenhaField] = useState('');
-    const [senha, setSenha] = useState('');
+    const [senha, setSenha] = useState("");
+    const [confirmSenha, setConfirmSenha] = useState("");
+
     const [showSenha, setShowSenha] = useState(false);
     const [showConfirm, setShowConfirm] = useState(false);
 
-    const handleRegister = () => {
-        router.push('/Register');
-    };
+    const { email, token } = useLocalSearchParams(); // 👈 Recebendo email da tela anterior
 
     const [fontsLoaded] = useFonts({
-        Regular: require('../assets/fonts/Poppins-Medium.ttf'),
-        Bold: require('../assets/fonts/Poppins-ExtraBold.ttf')
-
+        Regular: require("../assets/fonts/Poppins-Medium.ttf"),
+        Bold: require("../assets/fonts/Poppins-ExtraBold.ttf"),
     });
+
+    // 📌 Função que redefine a senha
+    const handleResetPassword = async () => {
+        if (!senha || !confirmSenha)
+            return alert("Erro Preencha todos os campos!");
+
+        if (senha.length < 6)
+            return alert("Erro A senha deve ter no mínimo 6 caracteres!");
+
+        if (senha !== confirmSenha)
+            return alert("Erro As senhas não coincidem!");
+
+        try {
+            const response = await api.post("/reset/reset-password", {
+                email,
+                token,
+                newPassword: senha,
+            });
+
+            alert("Sucesso " + response.data.message || "Senha redefinida!");
+            router.push('/Redefinir-Final');
+
+        } catch (error) {
+            const msg = error.response?.data?.error || "Erro ao redefinir senha.";
+            alert("Erro: " + msg);
+        }
+    };
 
     return (
         <SafeAreaProvider>
-            <SafeAreaView style={styles.container} edges={['left', 'right']}>
+            <SafeAreaView style={styles.container} edges={["left", "right"]}>
                 <ImageBackground source={image} style={styles.image}>
                     <View style={styles.viewcontainer}>
-                        {/* CONTAINER  */}
                         <View style={styles.header}>
-                            {/*HEADER */}
                             <Text style={styles.text}>Veasy</Text>
                         </View>
+
                         <View style={styles.forms}>
-                            {/* FORMS */}
-                            <Text style={styles.textocontainer}>Redefinir Senha{'\n'}</Text>
-                            <Text style={styles.campos}> Senha: </Text>
+                            <Text style={styles.textocontainer}>Redefinir Senha{"\n"}</Text>
+
+                            <Text style={styles.campos}>Nova Senha:</Text>
                             <TextInput
                                 style={[styles.field, { paddingRight: 40 }]}
                                 placeholder="Senha Super Segura"
                                 placeholderTextColor="#ccc"
-                                value={senhafield}
-                                onChangeText={setSenhaField}
+                                value={senha}
+                                onChangeText={setSenha}
                                 secureTextEntry={!showSenha}
                             />
                             <TouchableOpacity
@@ -55,13 +77,14 @@ const RedefinirSenha = () => {
                             >
                                 <Ionicons name={showSenha ? "eye-off" : "eye"} size={24} color="#ccc" />
                             </TouchableOpacity>
-                            <Text style={styles.campos}> Confirmar Senha: </Text>
+
+                            <Text style={styles.campos}>Confirmar Senha:</Text>
                             <TextInput
                                 style={[styles.field, { paddingRight: 40 }]}
-                                placeholder="Confirmar Super Segura"
+                                placeholder="Confirmar senha"
                                 placeholderTextColor="#ccc"
-                                value={confirmfield}
-                                onChangeText={setConfirmField}
+                                value={confirmSenha}
+                                onChangeText={setConfirmSenha}
                                 secureTextEntry={!showConfirm}
                             />
                             <TouchableOpacity
@@ -71,19 +94,34 @@ const RedefinirSenha = () => {
                                 <Ionicons name={showConfirm ? "eye-off" : "eye"} size={24} color="#ccc" />
                             </TouchableOpacity>
 
-                            <TouchableOpacity style={styles.button}>
+                            {/* Botão Confirmar */}
+                            <TouchableOpacity style={styles.button} onPress={handleResetPassword}>
                                 <Text
-                                    style={{ fontSize: 16, fontFamily: 'Regular', color: 'white', textAlign: 'center', width: 110, alignSelf: 'center', }}
+                                    style={{
+                                        fontSize: 16,
+                                        fontFamily: "Regular",
+                                        color: "white",
+                                        textAlign: "center",
+                                    }}
                                 >
-                                       <Link href={"/Redefinir-Final"} style={{ color: 'white', fontFamily: 'Regular' }}>Confirmar</Link>
-                                    
+                                    Confirmar
                                 </Text>
                             </TouchableOpacity>
 
-                                <TouchableOpacity onPress={() => router.back()}>
-                                    <Text style={{ color: "white", fontFamily: "Bold", textAlign: "center", marginTop:12, fontSize:16}}> Voltar </Text>
-                                </TouchableOpacity>
-
+                            {/* Voltar */}
+                            <TouchableOpacity onPress={() => router.back()}>
+                                <Text
+                                    style={{
+                                        color: "white",
+                                        fontFamily: "Bold",
+                                        textAlign: "center",
+                                        marginTop: 12,
+                                        fontSize: 16,
+                                    }}
+                                >
+                                    Voltar
+                                </Text>
+                            </TouchableOpacity>
                         </View>
                     </View>
                 </ImageBackground>

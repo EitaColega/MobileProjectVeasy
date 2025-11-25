@@ -7,6 +7,7 @@ import cors from "cors";
 import clashRoutes from "./routes/clashRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import jogadorRoutes from "./routes/jogadorRoutes.js";
+import resetRoutes from "./routes/resetRoutes.js";
 
 const app = express();
 
@@ -26,6 +27,10 @@ app.use("/usuarios", userRoutes);
 
 // rotas de Jogador
 app.use("/jogador", jogadorRoutes);
+
+// rotas de redefinir senha
+app.use("/reset", resetRoutes);
+
 
 const PORT = 3000;
 app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));
