@@ -42,15 +42,14 @@ const Register = () => {
         }),
       });
 
-        if (resposta.status === 201) {
-        const usuario = await resposta.json(); // <- pega o usuário criado
+      const usuario = await resposta.json();
+      global.usuario = usuario;
 
-        global.usuario = usuario; // <- guarda o usuário GLOBAL
-
+      if (resposta.status === 201) {
         alert("Usuário registrado com sucesso!");
         router.push("/RegisterId");
-      } else if (resposta.status === 400 && data.error === "Email já está cadastrado") {
-        alert ("Esse email já está em uso! Tente outro.");
+      } else if (resposta.status === 400 && usuario.error === "Email já está cadastrado") {
+        alert("Esse email já está em uso! Tente outro.");
       } else {
         alert("Erro ao registrar usuário!");
       }
@@ -69,7 +68,7 @@ const Register = () => {
       <SafeAreaView style={styles.container} edges={['left', 'right']}>
         <ImageBackground source={image} style={styles.image}>
           <View style={styles.viewcontainer}>
-            
+
             {/* HEADER */}
             <View style={styles.header}>
               <Text style={styles.text}>Veasy</Text>
@@ -132,7 +131,7 @@ const Register = () => {
 
               {/* BOTÃO VOLTAR/LOGIN */}
               <TouchableOpacity onPress={() => router.back()}>
-                <Text style={{ color: "white", fontFamily: "Bold", textAlign: "center", marginTop:32, fontSize:16}}>
+                <Text style={{ color: "white", fontFamily: "Bold", textAlign: "center", marginTop: 32, fontSize: 16 }}>
                   <Text style={{ color: "white", fontFamily: "Regular" }}>Já tem uma conta? </Text>Entrar
                 </Text>
               </TouchableOpacity>
