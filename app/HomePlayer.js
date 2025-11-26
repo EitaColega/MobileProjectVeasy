@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { ImageBackground, Text, View, TouchableOpacity, Image } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import { Link } from 'expo-router';
@@ -6,6 +6,7 @@ import { Ionicons } from '@expo/vector-icons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import * as ImagePicker from 'expo-image-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useFocusEffect } from '@react-navigation/native';
 import stylesplayer from '../assets/css/Stylesplayer';
 
 const homeplayer = require('../assets/background.jpg');
@@ -17,24 +18,20 @@ export default function HomePlayer() {
 	const [topTrofeus, setTopTrofeus] = useState('');
 	const [photo, setPhoto] = useState(null);
 
-	// Carrega dados
-	useEffect(() => {
-		document.title = 'Home Player';
-		setName('Gabiru');
-		setClanName('CORP');
-		setTrofeus('9999');
-		setTopTrofeus('9999');
 
-		loadPhoto();
-	}, []);
 
-	// Carregar foto salva
+	// Carregar foto salva sempre que voltar para essa tela
+	useFocusEffect(
+		useCallback(() => {
+			loadPhoto();
+		}, [])
+	);
+
 	const loadPhoto = async () => {
 		const saved = await AsyncStorage.getItem('playerPhoto');
 		if (saved) setPhoto(saved);
 	};
 
-	// Selecionar nova foto
 	const pickImage = async () => {
 		const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
 		if (status !== 'granted') {
@@ -49,7 +46,6 @@ export default function HomePlayer() {
 
 		if (!result.canceled) {
 			const uri = result.assets[0].uri;
-
 			await AsyncStorage.setItem('playerPhoto', uri);
 			setPhoto(uri);
 		}
@@ -61,13 +57,10 @@ export default function HomePlayer() {
 				<ImageBackground source={homeplayer} style={stylesplayer.homeimage}>
 					<View style={stylesplayer.overlay} />
 
-					{/* Título */}
 					<Text style={stylesplayer.hometext}>Perfil</Text>
 
-					{/* Container geral */}
 					<View style={stylesplayer.homecontainer}>
-						
-						{/* Foto do usuário */}
+
 						<TouchableOpacity onPress={pickImage}>
 							{photo ? (
 								<Image source={{ uri: photo }} style={stylesplayer.userImg} />
@@ -76,25 +69,21 @@ export default function HomePlayer() {
 							)}
 						</TouchableOpacity>
 
-						{/* Informações do Jogador */}
 						<View style={stylesplayer.infoCenter}>
 							<Text style={stylesplayer.name}>{name}</Text>
 							<Text style={stylesplayer.info}>Clã: {clanName}</Text>
 						</View>
 
-						{/* Estatísticas */}
 						<View style={stylesplayer.statsContainer}>
 							<Text style={stylesplayer.top}>Troféus: {trofeus}</Text>
 							<Text style={stylesplayer.top}>Top Troféus: {topTrofeus}</Text>
 						</View>
 
-						{/* Título */}
 						<Text style={stylesplayer.sectionTitle}>Top Decks</Text>
 
 						<View style={stylesplayer.deckBox} />
 					</View>
 
-					{/* Bottom bar */}
 					<View style={stylesplayer.bottomBar}>
 						<Link href="/HomeDecker" asChild>
 							<TouchableOpacity style={{ alignItems: 'center' }}>

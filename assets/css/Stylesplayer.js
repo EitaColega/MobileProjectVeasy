@@ -23,8 +23,8 @@ const stylesplayer = StyleSheet.create({
 		fontSize: 28,
 		textAlign: 'center',
 		fontFamily: 'Regular',
-		marginTop: 20,
-		marginBottom: 10,
+		marginTop: 6,
+		marginBottom: 8,
 		textShadowColor: '#450693',
 		textShadowOffset: { width: 4, height: 4 },
 		textShadowRadius: 5
@@ -32,7 +32,7 @@ const stylesplayer = StyleSheet.create({
 
 	/* CONTAINER PRINCIPAL */
 	homecontainer: {
-		marginTop: 10,
+		marginTop: 6,
 		backgroundColor: 'rgba(11, 10, 10, 0.47)',
 		width: 360,
 		borderColor: '#EEEEEE66',
@@ -41,7 +41,7 @@ const stylesplayer = StyleSheet.create({
 		paddingVertical: 20,
 		paddingHorizontal: 10,
 		alignItems: 'center',
-		gap: 12
+		gap: 8
 	},
 
 	/* INFO DO PLAYER */

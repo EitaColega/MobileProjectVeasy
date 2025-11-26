@@ -1,8 +1,8 @@
 import { ImageBackground, Text, View, TouchableOpacity, Image } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import styleshome from '../assets/css/Stylehome';
-import { Link } from 'expo-router';
+import { Link, useFocusEffect } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -22,7 +22,7 @@ const Options = () => {
 	// Carrega jogador logado
 	const loadPlayer = async () => {
 		try {
-			const token = "SEU_TOKEN_AQUI"; // substituir pelo AsyncStorage
+			const token = "SEU_TOKEN_AQUI"; // depois substituir pelo token salvo
 
 			const res = await fetch("http://SEU_BACKEND/jogador/me", {
 				headers: { Authorization: `Bearer ${token}` }
@@ -35,12 +35,17 @@ const Options = () => {
 		}
 	};
 
-	// Executa no carregamento
+	// Carrega apenas na primeira vez
 	useEffect(() => {
-		document.title = "Configurações";
-		loadPhoto();
 		loadPlayer();
 	}, []);
+
+	// 🔥 Carrega sempre que a tela ganha foco (aqui está a solução!)
+	useFocusEffect(
+		useCallback(() => {
+			loadPhoto();
+		}, [])
+	);
 
 	return (
 		<SafeAreaProvider>
@@ -83,7 +88,7 @@ const Options = () => {
 							</TouchableOpacity>
 						</Link>
 
-						<Link href="/Redefinir-Senha" asChild>
+						<Link href="/Redefinir-Email" asChild>
 							<TouchableOpacity style={styleshome.settingbullets}>
 								<Text style={styleshome.textbullets}>Trocar Senha</Text>
 							</TouchableOpacity>
