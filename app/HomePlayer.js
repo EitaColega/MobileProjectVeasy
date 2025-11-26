@@ -19,6 +19,7 @@ export default function HomePlayer() {
 	const [photo, setPhoto] = useState(null);
 
 
+	
 
 	// Carregar foto salva sempre que voltar para essa tela
 	useFocusEffect(
