@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import { View, Text, ActivityIndicator, Image, ScrollView } from "react-native";
 import axios from "axios";
 
+const API_URL = process.env.EXPO_PUBLIC_API_URL;
+
 export default function DeckList({
   title,
   tag = null,
@@ -12,8 +14,8 @@ export default function DeckList({
   const [decks, setDecks] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const BASE_PLAYER = "http://localhost:3000/decks/current-player";
-  const BASE_POPULAR = "http://localhost:3000/decks/popular";
+  const BASE_PLAYER = `${API_URL}/decks/current-player`;
+  const BASE_POPULAR = `${API_URL}/decks/popular`;
 
   useEffect(() => {
     async function loadDecks() {

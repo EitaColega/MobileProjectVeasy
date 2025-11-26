@@ -8,9 +8,7 @@ import { router } from 'expo-router';
 const image = require('../assets/background.jpg');
 
 const RedefinirFinal = () => {
-    useEffect(() => {
-        document.title = "Redefinir Senha";
-      }, []);
+    
     const [codigofield, setCodigoField] = useState('');
     const [codigo, setCodigo] = useState('');
 

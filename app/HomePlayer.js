@@ -66,6 +66,7 @@ export default function HomePlayer() {
 
 					{/* Container geral */}
 					<View style={stylesplayer.homecontainer}>
+						
 						{/* Foto do usuário */}
 						<TouchableOpacity onPress={pickImage}>
 							{photo ? (
@@ -81,36 +82,32 @@ export default function HomePlayer() {
 							<Text style={stylesplayer.info}>Clã: {clanName}</Text>
 						</View>
 
-						{/* Estatísticas — TROFÉUS e TOP TROFÉUS alinhados à esquerda */}
+						{/* Estatísticas */}
 						<View style={stylesplayer.statsContainer}>
 							<Text style={stylesplayer.top}>Troféus: {trofeus}</Text>
 							<Text style={stylesplayer.top}>Top Troféus: {topTrofeus}</Text>
 						</View>
 
-						{/* Título Top Decks */}
+						{/* Título */}
 						<Text style={stylesplayer.sectionTitle}>Top Decks</Text>
 
-						{/* Box de Decks */}
-						<View style={stylesplayer.deckBox}></View>
+						<View style={stylesplayer.deckBox} />
 					</View>
 
 					{/* Bottom bar */}
 					<View style={stylesplayer.bottomBar}>
-						{/* Cartas */}
 						<Link href="/HomeDecker" asChild>
 							<TouchableOpacity style={{ alignItems: 'center' }}>
 								<MaterialCommunityIcons name="cards-outline" size={42} color="white" />
 							</TouchableOpacity>
 						</Link>
 
-						{/* Player */}
 						<Link href="/HomePlayer" asChild>
 							<TouchableOpacity style={{ alignItems: 'center' }}>
 								<Ionicons name="person-circle-outline" size={42} color="#4B1664" />
 							</TouchableOpacity>
 						</Link>
 
-						{/* Config */}
 						<Link href="/Options" asChild>
 							<TouchableOpacity style={{ alignItems: 'center' }}>
 								<Ionicons name="settings-outline" size={42} color="white" />

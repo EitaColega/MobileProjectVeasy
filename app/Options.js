@@ -11,49 +11,34 @@ const options = require('../assets/background.jpg');
 
 const Options = () => {
 	const [photo, setPhoto] = useState(null);
+	const [player, setPlayer] = useState(null);
 
-	// Carregar foto do jogador
+	// Carrega foto salva
 	const loadPhoto = async () => {
 		const saved = await AsyncStorage.getItem('playerPhoto');
 		if (saved) setPhoto(saved);
 	};
 
-	useEffect(() => {
-		document.title = 'Configurações';
-		loadPhoto();
-	}, []);
-
+	// Carrega jogador logado
 	const loadPlayer = async () => {
 		try {
-			const token = 'SEU_TOKEN_AQUI'; // depois substitui pelo async-storage
-			const res = await fetch('http://SEU_BACKEND/jogador/me', {
+			const token = "SEU_TOKEN_AQUI"; // substituir pelo AsyncStorage
+
+			const res = await fetch("http://SEU_BACKEND/jogador/me", {
 				headers: { Authorization: `Bearer ${token}` }
 			});
 
 			const data = await res.json();
 			setPlayer(data);
 		} catch (err) {
-			console.log('Erro ao carregar jogador', err);
+			console.log("Erro ao carregar jogador", err);
 		}
 	};
 
-	const [player, setPlayer] = useState(null);
-
+	// Executa no carregamento
 	useEffect(() => {
-		const loadPlayer = async () => {
-			try {
-				const token = 'SEU_TOKEN_AQUI'; // depois substitui pelo async-storage
-				const res = await fetch('http://SEU_BACKEND/jogador/me', {
-					headers: { Authorization: `Bearer ${token}` }
-				});
-
-				const data = await res.json();
-				setPlayer(data);
-			} catch (err) {
-				console.log('Erro ao carregar jogador', err);
-			}
-		};
-
+		document.title = "Configurações";
+		loadPhoto();
 		loadPlayer();
 	}, []);
 
@@ -66,30 +51,32 @@ const Options = () => {
 					{/* Título */}
 					<Text style={styleshome.hometext}>Player Settings</Text>
 
-					{/* Opções */}
+					{/* Conteúdo */}
 					<View style={styleshome.homecontainerOp}>
-						{/* Foto do jogador */}
-						<View style={{ alignItems: 'center', marginBottom: 20 }}>
+
+						{/* Foto */}
+						<View style={{ alignItems: "center", marginBottom: 20 }}>
 							{photo ? (
 								<Image source={{ uri: photo }} style={styleshome.userImg} />
 							) : (
 								<Ionicons name="person-circle-outline" size={120} color="white" />
 							)}
 						</View>
-						{/* NOME DO USUÁRIO */}
+
+						{/* Nome do jogador */}
 						<Text
 							style={{
-								color: 'white',
+								color: "white",
 								fontSize: 28,
-								fontWeight: 'bold',
-								textAlign: 'center',
-								marginBottom: 25 // espaço entre nome e os botões
+								fontWeight: "bold",
+								textAlign: "center",
+								marginBottom: 25
 							}}
 						>
-							{player?.nome ?? 'Name'}
+							{player?.nome ?? "Name"}
 						</Text>
 
-						{/* BOTÕES */}
+						{/* Ações */}
 						<Link href="/Redfine-Email" asChild>
 							<TouchableOpacity style={styleshome.settingbullets}>
 								<Text style={styleshome.textbullets}>Trocar Email</Text>
@@ -109,25 +96,22 @@ const Options = () => {
 						</Link>
 					</View>
 
-					{/* Bottom bar */}
+					{/* Rodapé */}
 					<View style={styleshome.bottomBar}>
-						{/* Cartas */}
 						<Link href="/HomeDecker" asChild>
-							<TouchableOpacity style={{ alignItems: 'center' }}>
+							<TouchableOpacity style={{ alignItems: "center" }}>
 								<MaterialCommunityIcons name="cards-outline" size={42} color="white" />
 							</TouchableOpacity>
 						</Link>
 
-						{/* Player */}
 						<Link href="/HomePlayer" asChild>
-							<TouchableOpacity style={{ alignItems: 'center' }}>
+							<TouchableOpacity style={{ alignItems: "center" }}>
 								<Ionicons name="person-circle-outline" size={42} color="white" />
 							</TouchableOpacity>
 						</Link>
 
-						{/* Engrenagem */}
 						<Link href="/Options" asChild>
-							<TouchableOpacity style={{ alignItems: 'center' }}>
+							<TouchableOpacity style={{ alignItems: "center" }}>
 								<Ionicons name="settings-outline" size={42} color="#4B1664" />
 								<Text style={styleshome.FooterName}>Options</Text>
 							</TouchableOpacity>

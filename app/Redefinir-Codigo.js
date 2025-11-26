@@ -1,6 +1,6 @@
 import { ImageBackground, Text, View, TextInput, TouchableOpacity, Alert } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useFonts } from "expo-font";
 import styles from "../assets/css/Styles";
 import { router, useLocalSearchParams } from "expo-router";
@@ -8,20 +8,16 @@ import api from "../services/api";
 
 const image = require("../assets/background.jpg");
 
-const RedefinirCodigo = () => {
-    useEffect(() => {
-        document.title = "Código de Redefinição";
-    }, []);
-
+const RedefinirCodigo = () => { 
+    
     const [token, setToken] = useState("");
-    const { email } = useLocalSearchParams(); // 👈 Email vindo da tela anterior
+    const { email } = useLocalSearchParams(); 
 
     const [fontsLoaded] = useFonts({
         Regular: require("../assets/fonts/Poppins-Medium.ttf"),
         Bold: require("../assets/fonts/Poppins-ExtraBold.ttf"),
     });
 
-    // 📌 Função que valida o código
     const handleVerifyCode = async () => {
         if (!token || token.length < 4) {
             return alert("Erro, Digite o código recebido no email!");
@@ -35,7 +31,6 @@ const RedefinirCodigo = () => {
 
             alert("Sucesso " + response.data.message || "Código validado!");
 
-            // 👉 Vai para redefinir senha passando o email
             router.push({ pathname: "/Redefinir-Senha", params: { email, token } });
 
         } catch (error) {
@@ -55,6 +50,7 @@ const RedefinirCodigo = () => {
 
                         <View style={styles.forms}>
                             <Text style={styles.textocontainer}>Redefinir Senha</Text>
+                            
                             <Text
                                 style={{
                                     fontSize: 16,
@@ -73,14 +69,18 @@ const RedefinirCodigo = () => {
                                 {"\n"}Digite o código para continuar.
                             </Text>
 
+                            {/* INPUT ACEITA SOMENTE NÚMEROS */}
                             <TextInput
                                 style={styles.field}
                                 placeholder="Código de 6 dígitos"
                                 placeholderTextColor="#ccc"
                                 value={token}
-                                onChangeText={setToken}
                                 keyboardType="numeric"
                                 maxLength={6}
+                                onChangeText={(text) => {
+                                    const numericOnly = text.replace(/[^0-9]/g, "");
+                                    setToken(numericOnly);
+                                }}
                             />
 
                             {/* Confirmar */}
@@ -111,6 +111,7 @@ const RedefinirCodigo = () => {
                                     Voltar
                                 </Text>
                             </TouchableOpacity>
+
                         </View>
                     </View>
                 </ImageBackground>
