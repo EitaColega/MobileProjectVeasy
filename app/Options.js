@@ -64,7 +64,7 @@ const Options = () => {
 							{photo ? (
 								<Image source={{ uri: photo }} style={styleshome.userImg} />
 							) : (
-								<Ionicons name="person-circle-outline" size={120} color="white" />
+								<Ionicons name="person-circle-outline" size={180} color="white" />
 							)}
 						</View>
 
