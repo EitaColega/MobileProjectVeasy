@@ -35,12 +35,6 @@ const Options = () => {
 		}
 	};
 
-	// Executa no carregamento
-	useEffect(() => {
-		document.title = "Configurações";
-		loadPhoto();
-		loadPlayer();
-	}, []);
 
 	return (
 		<SafeAreaProvider>

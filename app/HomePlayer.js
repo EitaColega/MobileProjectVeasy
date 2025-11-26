@@ -17,16 +17,7 @@ export default function HomePlayer() {
 	const [topTrofeus, setTopTrofeus] = useState('');
 	const [photo, setPhoto] = useState(null);
 
-	// Carrega dados
-	useEffect(() => {
-		document.title = 'Home Player';
-		setName('Gabiru');
-		setClanName('CORP');
-		setTrofeus('9999');
-		setTopTrofeus('9999');
-
-		loadPhoto();
-	}, []);
+	
 
 	// Carregar foto salva
 	const loadPhoto = async () => {
