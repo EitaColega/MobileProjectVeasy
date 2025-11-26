@@ -1,138 +1,124 @@
-import { ImageBackground, Text, View, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { ImageBackground, Text, View, TouchableOpacity, Image } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
-import React, { useState, useEffect } from 'react';
-import styleshome from '../assets/css/Stylehome';
 import { Link } from 'expo-router';
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons } from '@expo/vector-icons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import * as ImagePicker from 'expo-image-picker';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import stylesplayer from '../assets/css/Stylesplayer';
 
 const homeplayer = require('../assets/background.jpg');
 
-const HomePlayer = () => {
+export default function HomePlayer() {
+	const [name, setName] = useState('');
+	const [clanName, setClanName] = useState('');
+	const [trofeus, setTrofeus] = useState('');
+	const [topTrofeus, setTopTrofeus] = useState('');
+	const [photo, setPhoto] = useState(null);
+
+	// Carrega dados
 	useEffect(() => {
-			document.title = "Home Player";
+		document.title = 'Home Player';
+		setName('Gabiru');
+		setClanName('CORP');
+		setTrofeus('9999');
+		setTopTrofeus('9999');
+
+		loadPhoto();
 	}, []);
-	const [searchQuery, setSearchQuery] = useState('');
 
-  const [name, setName] = useState('');
-  const [clanName, setClanName] = useState('');
-  const [trofeus, setTrofeus] = useState('');
-  const [topTrofeus, setTopTrofeus] = useState('');
+	// Carregar foto salva
+	const loadPhoto = async () => {
+		const saved = await AsyncStorage.getItem('playerPhoto');
+		if (saved) setPhoto(saved);
+	};
 
-//testando espaçamento 
-  useEffect(() => {
-    setName("Gabiru");
-    setClanName("CORP");
-    setTrofeus("9999");
-    setTopTrofeus("9999");
-    
-  }, []);
+	// Selecionar nova foto
+	const pickImage = async () => {
+		const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+		if (status !== 'granted') {
+			alert('Permissão negada para acessar a galeria.');
+			return;
+		}
 
-  return (
-    <SafeAreaProvider>
-      <SafeAreaView style={styleshome.home} edges={['left', 'right']}>
-        <ImageBackground source={homeplayer} style={styleshome.homeimage}>
-          <View style={styleshome.overlay} />
-		  	
-          <View>
-            <Text style={styleshome.hometext}>Player Search</Text>
-          </View>
+		const result = await ImagePicker.launchImageLibraryAsync({
+			mediaTypes: ImagePicker.MediaTypeOptions.Images,
+			quality: 1
+		});
 
-          
-          <View 
-            style={{
-              ...styleshome.homecontainer,
-              justifyContent: "top",
-              alignItems: "center",
-			  paddingTop: 10
-            }}
-          >
+		if (!result.canceled) {
+			const uri = result.assets[0].uri;
 
-            <Ionicons name="person-circle-outline" size={120} color="white" />
+			await AsyncStorage.setItem('playerPhoto', uri);
+			setPhoto(uri);
+		}
+	};
 
-            {/* info-player*/}
-            <Text style={{
-              color: 'white',
-              fontSize: 24,
-              textAlign: 'left',
-              fontFamily: 'Regular',
-              padding: 20,
-              marginTop: -55,
-            }}>
-              {'\n'}{name}
-            </Text>
+	return (
+		<SafeAreaProvider>
+			<SafeAreaView style={stylesplayer.home} edges={['left', 'right']}>
+				<ImageBackground source={homeplayer} style={stylesplayer.homeimage}>
+					<View style={stylesplayer.overlay} />
 
-            <Text style={{
-              color: 'white',
-              fontSize: 24,
-              textAlign: 'left',
-              fontFamily: 'Regular',
-              padding: 20,
-              marginTop: -40,
-            }}>
-            	Clã:{clanName}
-            </Text>
+					{/* Título */}
+					<Text style={stylesplayer.hometext}>Perfil</Text>
 
-            <Text style={styleshome.textplayer}>
-              {'\n'}  {'\n'}Troféus: {trofeus}
-            </Text>
+					{/* Container geral */}
+					<View style={stylesplayer.homecontainer}>
+						{/* Foto do usuário */}
+						<TouchableOpacity onPress={pickImage}>
+							{photo ? (
+								<Image source={{ uri: photo }} style={stylesplayer.userImg} />
+							) : (
+								<Ionicons name="person-circle-outline" size={120} color="white" />
+							)}
+						</TouchableOpacity>
 
-            <Text style={styleshome.textplayer}>
-              {'\n'}Top Troféus: {topTrofeus}
-            </Text>
+						{/* Informações do Jogador */}
+						<View style={stylesplayer.infoCenter}>
+							<Text style={stylesplayer.name}>{name}</Text>
+							<Text style={stylesplayer.info}>Clã: {clanName}</Text>
+						</View>
 
-            <Text style={styleshome.textplayer}>
-              {'\n'}  {'\n'}Top Deks: 
-            </Text>
-			
-			<View style={{
-				marginTop: -10,
-				marginBottom: 20,
-				alignItems: 'center',
-				backgroundColor: 'rgba(11, 10, 10, 0.47)',
-				width: 330,
-				height: 200,
-				borderColor: '#EEEEEE66',
-				borderWidth: 2,
-				borderRadius: 50,
-				padding: 64,
-				marginBottom: 60}}>
-				
-			</View>	
+						{/* Estatísticas — TROFÉUS e TOP TROFÉUS alinhados à esquerda */}
+						<View style={stylesplayer.statsContainer}>
+							<Text style={stylesplayer.top}>Troféus: {trofeus}</Text>
+							<Text style={stylesplayer.top}>Top Troféus: {topTrofeus}</Text>
+						</View>
 
-          </View>
-			
+						{/* Título Top Decks */}
+						<Text style={stylesplayer.sectionTitle}>Top Decks</Text>
 
-          {/* Bottom bar */}
-          <View style={styleshome.bottomBar}>
+						{/* Box de Decks */}
+						<View style={stylesplayer.deckBox}></View>
+					</View>
 
-            {/* Cartas */}
-            <Link href="/HomeDecker" asChild>
-              <TouchableOpacity style={{ alignItems: "center" }}>
-                <MaterialCommunityIcons name="cards-outline" size={42} color="white" />
-              </TouchableOpacity>
-            </Link>
+					{/* Bottom bar */}
+					<View style={stylesplayer.bottomBar}>
+						{/* Cartas */}
+						<Link href="/HomeDecker" asChild>
+							<TouchableOpacity style={{ alignItems: 'center' }}>
+								<MaterialCommunityIcons name="cards-outline" size={42} color="white" />
+							</TouchableOpacity>
+						</Link>
 
-            {/* Player */}
-            <Link href="/HomePlayer" asChild>
-              <TouchableOpacity style={{ alignItems: "center" }}>
-                <Ionicons name="person-circle-outline" size={42} color="#4B1664" />
-              </TouchableOpacity>
-            </Link>
+						{/* Player */}
+						<Link href="/HomePlayer" asChild>
+							<TouchableOpacity style={{ alignItems: 'center' }}>
+								<Ionicons name="person-circle-outline" size={42} color="#4B1664" />
+							</TouchableOpacity>
+						</Link>
 
-            {/* Engrenagem */}
-            <Link href="/Options" asChild>
-              <TouchableOpacity style={{ alignItems: "center" }}>
-                <Ionicons name="settings-outline" size={42} color="white" />
-              </TouchableOpacity>
-            </Link>
-
-          </View>
-
-        </ImageBackground>
-      </SafeAreaView>
-    </SafeAreaProvider>
-  );
-};
-
-export default HomePlayer;
+						{/* Config */}
+						<Link href="/Options" asChild>
+							<TouchableOpacity style={{ alignItems: 'center' }}>
+								<Ionicons name="settings-outline" size={42} color="white" />
+							</TouchableOpacity>
+						</Link>
+					</View>
+				</ImageBackground>
+			</SafeAreaView>
+		</SafeAreaProvider>
+	);
+}

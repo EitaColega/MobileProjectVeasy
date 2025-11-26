@@ -76,15 +76,15 @@ const styleshome = StyleSheet.create({
 		marginBottom: 60
 	},
 
-    textplayer:{
-        color: 'white',
-	    fontSize: 24,
-		textAlign: 'rigth', 
+	textplayer: {
+		color: 'white',
+		fontSize: 24,
+		textAlign: 'rigth',
 		fontFamily: 'Regular',
 		padding: 20,
 		marginTop: -65,
-		width: "160%"
-    },
+		width: '160%'
+	},
 
 	deckercontainer2: {
 		marginTop: 20,
@@ -119,9 +119,9 @@ const styleshome = StyleSheet.create({
 		borderColor: '#EEEEEE66',
 		borderWidth: 2,
 		borderRadius: 15,
-		width: 140, 
+		width: 140,
 		margin: 8,
-		alignItems: 'center', 
+		alignItems: 'center'
 	},
 
 	textbullets: {
@@ -143,9 +143,28 @@ const styleshome = StyleSheet.create({
 		borderRadius: 50,
 		paddingHorizontal: 20,
 		paddingVertical: 30,
+
+		// CORREÇÃO
+		flexDirection: 'column',
+		alignItems: 'center',
+		justifyContent: 'flex-start'
+	},
+
+	userImg: {
+		width: 120,
+		height: 120,
+		borderRadius: 60,
+		borderWidth: 3,
+		borderColor: 'white'
+	},
+
+	viewbullets: {
+		marginTop: 20,
+		width: '100%',
 		flexDirection: 'row',
-		flexWrap: 'wrap',
-		justifyContent: 'center'
+		justifyContent: 'center',
+		alignItems: 'center',
+		gap: 20
 	}
 });
 
