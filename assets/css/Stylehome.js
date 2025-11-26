@@ -151,9 +151,9 @@ const styleshome = StyleSheet.create({
 	},
 
 	userImg: {
-		width: 120,
-		height: 120,
-		borderRadius: 60,
+		width: 150,
+		height: 150,
+		borderRadius: 80,
 		borderWidth: 3,
 		borderColor: 'white'
 	},
