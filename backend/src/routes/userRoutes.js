@@ -8,6 +8,7 @@ router.get("/", userController.getAllUsuarios);
 router.post("/", userController.createUsuario);
 router.put("/:id", userController.updateUsuario);
 router.delete("/:id", userController.deleteUsuario);
+router.post("/delete-with-password", authMiddleware, userController.deleteUsuario);
 router.post("/login", userController.loginUsuario);
 router.get("/me", authMiddleware, async (req, res) => {
   const usuario = await prisma.usuario.findUnique({
