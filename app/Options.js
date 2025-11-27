@@ -40,7 +40,7 @@ const Options = () => {
 		loadPlayer();
 	}, []);
 
-	// 🔥 Carrega sempre que a tela ganha foco (aqui está a solução!)
+
 	useFocusEffect(
 		useCallback(() => {
 			loadPhoto();
@@ -82,11 +82,6 @@ const Options = () => {
 						</Text>
 
 						{/* Ações */}
-						<Link href="/Redfine-Email" asChild>
-							<TouchableOpacity style={styleshome.settingbullets}>
-								<Text style={styleshome.textbullets}>Trocar Email</Text>
-							</TouchableOpacity>
-						</Link>
 
 						<Link href="/Redefinir-Email" asChild>
 							<TouchableOpacity style={styleshome.settingbullets}>
