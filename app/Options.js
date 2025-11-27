@@ -94,6 +94,12 @@ const Options = () => {
 							</TouchableOpacity>
 						</Link>
 
+						<Link href="/Options" asChild>
+							<TouchableOpacity style={styleshome.settingbullets}>
+								<Text style={styleshome.textbullets}>Sair</Text>
+							</TouchableOpacity>
+						</Link>
+
 						<Link href="/" asChild>
 							<TouchableOpacity style={styleshome.settingbullets}>
 								<Text style={styleshome.textbullets}>Sair</Text>
