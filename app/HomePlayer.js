@@ -17,9 +17,12 @@ export default function HomePlayer() {
 	const [trofeus, setTrofeus] = useState('');
 	const [topTrofeus, setTopTrofeus] = useState('');
 	const [photo, setPhoto] = useState(null);
+	const [wins, setWins] = useState('');
+	const [losses, setLosses] = useState('');
+	const [explevel, setExplevel] = useState('');
 
 
-	
+
 
 	// Carregar foto salva sempre que voltar para essa tela
 	useFocusEffect(
@@ -61,6 +64,9 @@ export default function HomePlayer() {
 					<Text style={stylesplayer.hometext}>Perfil</Text>
 
 					<View style={stylesplayer.homecontainer}>
+						<View style={stylesplayer.infoCenter}>
+							<Text style={stylesplayer.info}>Nv: {explevel}</Text>
+						</View>
 
 						<TouchableOpacity onPress={pickImage}>
 							{photo ? (
@@ -70,14 +76,20 @@ export default function HomePlayer() {
 							)}
 						</TouchableOpacity>
 
+
 						<View style={stylesplayer.infoCenter}>
-							<Text style={stylesplayer.name}>{name}</Text>
+							<Text style={stylesplayer.name}> {name} </Text>
 							<Text style={stylesplayer.info}>Clã: {clanName}</Text>
 						</View>
 
-						<View style={stylesplayer.statsContainer}>
-							<Text style={stylesplayer.top}>Troféus: {trofeus}</Text>
-							<Text style={stylesplayer.top}>Top Troféus: {topTrofeus}</Text>
+					
+						<View style={stylesplayer.infoCenter}>
+							<Text style={stylesplayer.top}>
+								Troféus: {trofeus}                               Vitórias: {wins}
+							</Text>
+							<Text style={stylesplayer.top}>
+								Top Troféus: {topTrofeus}                        Derrotas: {losses}
+							</Text>
 						</View>
 
 						<Text style={stylesplayer.sectionTitle}>Top Decks</Text>
