@@ -1,6 +1,6 @@
 // app/components/DeckList.js
 import React, { useEffect, useState } from "react";
-import { View, Text, ActivityIndicator, Image, ScrollView } from "react-native";
+import { View, Text, ActivityIndicator, Image } from "react-native";
 import axios from "axios";
 
 const API_URL = process.env.EXPO_PUBLIC_API_URL;
@@ -9,7 +9,7 @@ export default function DeckList({
   title,
   tag = null,
   debug = false,
-  source = "player" // "player" (padrão) ou "popular"
+  source = "player"
 }) {
   const [decks, setDecks] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -22,26 +22,21 @@ export default function DeckList({
       try {
         let url;
 
-        // Se quiser o deck popular do dia (scraper)
         if (source === "popular") {
           url = BASE_POPULAR;
         } else {
-          // Deck do jogador
           url =
             BASE_PLAYER +
             (tag ? `?tag=${tag}` : "") +
             (debug ? `${tag ? "&" : "?"}debug=1` : "");
         }
 
-        if (debug) console.log("🔵 DeckList Requisição:", url);
+        if (debug) console.log("🔵 DeckList > URL:", url);
 
         const res = await axios.get(url);
-
-        if (debug) console.log("🔵 Resposta:", res.data);
-
         setDecks(res.data);
       } catch (err) {
-        console.log("Erro ao buscar decks:", err.message);
+        console.log("❌ Erro ao buscar decks:", err.message);
       } finally {
         setLoading(false);
       }
@@ -52,13 +47,21 @@ export default function DeckList({
 
   if (loading)
     return (
-      <View style={{ padding: 20 }}>
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <ActivityIndicator size="large" color="#fff" />
       </View>
     );
 
   return (
-    <View style={{ marginVertical: 10 }}>
+    <View
+      style={{
+        marginVertical: 10,
+        justifyContent: "center",
+        alignItems: "center",
+        flexGrow: 1,
+        width: "100%",
+      }}
+    >
       {title && (
         <Text
           style={{
@@ -73,10 +76,17 @@ export default function DeckList({
         </Text>
       )}
 
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        style={{ paddingHorizontal: 10 }}
+      {/* Sem scroll horizontal → decks ficam fixos e centralizados */}
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "center",
+          alignItems: "center",
+          flexWrap: "wrap",
+          gap: 12,
+          width: "100%",
+          paddingHorizontal: 10,
+        }}
       >
         {decks.map((deck, index) => (
           <View
@@ -84,11 +94,11 @@ export default function DeckList({
             style={{
               backgroundColor: "#ffffff22",
               padding: 12,
-              marginRight: 12,
               borderRadius: 15,
               shadowColor: "#000",
               shadowOpacity: 0.3,
               shadowRadius: 4,
+              marginHorizontal: 6,
             }}
           >
             <View style={{ flexDirection: "row" }}>
@@ -118,7 +128,7 @@ export default function DeckList({
             </Text>
           </View>
         ))}
-      </ScrollView>
+      </View>
     </View>
   );
 }
