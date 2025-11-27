@@ -46,7 +46,26 @@ O objetivo é oferecer uma experiência simples e eficiente, reunindo dados rele
 * Consultar decks completos usados pelos jogadores
 * Unir dados de forma organizada para facilitar comparações e estudos de estratégia
 
+### Back-end
+
+* Jsonwebtoken v9.0.2
+* Mysql2 v3.15.3
+* Prisma v6.19.0
+* Sequelize v6.37.7
+* bcrypt v^6.0.0
+* Express v^5.1.0
+
 ---
+
+## Funcionalidades principais
+
+* Acessar informações detalhadas de jogadores
+* Consultar decks completos usados pelos jogadores
+* Unir dados de forma organizada para facilitar comparações e estudos de estratégia
+
+---
+
+## Como configurar o projeto
 
 ## Colaboradores do projeto
 

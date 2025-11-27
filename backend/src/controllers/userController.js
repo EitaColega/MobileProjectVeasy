@@ -69,15 +69,34 @@ export const updateUsuario = async (req, res) => {
 /* Remove um usuário */
 export const deleteUsuario = async (req, res) => {
   try {
-    const { id } = req.params;
+    const { password } = req.body;
+    const userId = req.userId;
 
-    await prisma.usuario.delete({
-      where: { id_usuario: Number(id) },
+    const user = await prisma.usuario.findUnique({
+      where: { id_usuario: userId },
     });
 
-    res.json({ message: "Usuário removido com sucesso" });
+    if (!user) {
+      return res.status(404).json({ error: "Usuário não encontrado" });
+    }
+
+    // comparar senha
+    const bcrypt = await import("bcryptjs");
+    const isMatch = await bcrypt.compare(password, user.senha);
+
+    if (!isMatch) {
+      return res.status(401).json({ error: "Senha incorreta" });
+    }
+
+    // deletar usuário
+    await prisma.usuario.delete({
+      where: { id_usuario: userId },
+    });
+
+    return res.json({ message: "Usuário deletado com sucesso" });
   } catch (err) {
-    res.status(500).json({ error: "Erro ao deletar usuário" });
+    console.log(err);
+    res.status(500).json({ error: "Erro ao excluir usuário" });
   }
 };
 
