@@ -74,31 +74,26 @@ export const deleteUsuario = async (req, res) => {
 
     const user = await prisma.usuario.findUnique({
       where: { id_usuario: userId },
+      include: { jogador: true }
     });
 
-    if (!user) {
-      return res.status(404).json({ error: "Usuário não encontrado" });
-    }
+    if (!user) return res.status(404).json({ error: "Usuário não encontrado" });
 
-    // comparar senha
-    const bcrypt = await import("bcryptjs");
-    const isMatch = await bcrypt.compare(password, user.senha);
+    const senhaValida = await bcrypt.compare(password, user.senha);
+    if (!senhaValida) return res.status(401).json({ error: "Senha incorreta" });
 
-    if (!isMatch) {
-      return res.status(401).json({ error: "Senha incorreta" });
-    }
-
-    // deletar usuário
+    // Delete usuário - CASCADE remove jogador automaticamente
     await prisma.usuario.delete({
-      where: { id_usuario: userId },
+      where: { id_usuario: userId }
     });
 
-    return res.json({ message: "Usuário deletado com sucesso" });
+    return res.json({ message: "Usuário e jogador deletados com sucesso" });
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Erro ao excluir usuário" });
   }
 };
+
 
 /* Login do usuário */
 export const loginUsuario = async (req, res) => {

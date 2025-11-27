@@ -24,22 +24,21 @@ model Usuario {
   senha      String   @db.VarChar(255)
   criado_em  DateTime @default(now())
 
-  jogador Jogador?
-
+  jogador     Jogador?
   resetTokens ResetToken[]
 }
 
 model Jogador {
   id_jogador Int     @id @default(autoincrement())
-  clash_id   String  @unique @db.VarChar(18) // Tag do Clash Royale (#XXXXX)
+  clash_id   String  @unique @db.VarChar(18)
   nome       String  @db.VarChar(50)
   nivel      Int
   trofeus    Int
-  pais       String? @db.VarChar(10) // Código do país (opcional)
+  pais       String? @db.VarChar(10)
 
   // Relacionamento 1:1 com Usuario
   id_usuario Int     @unique
-  usuario    Usuario @relation(fields: [id_usuario], references: [id_usuario])
+  usuario    Usuario @relation(fields: [id_usuario], references: [id_usuario], onDelete: Cascade)
 
   // Relacionamento com Cla
   id_cla Int?

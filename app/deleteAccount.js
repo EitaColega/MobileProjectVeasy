@@ -1,92 +1,76 @@
-import { View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
-import React, { useState } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ImageBackground, StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import React, { useState } from "react";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { router } from "expo-router";
+import styles from "../assets/css/Styles";
+import api from "../services/api";
+
+const bg = require("../assets/background.jpg");
 
 export default function DeleteAccount() {
-  const [password, setPassword] = useState("");
+  const [senha, setSenha] = useState("");
+  const [showSenha, setShowSenha] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const handleDelete = async () => {
-    if (!password) {
-      Alert.alert("Erro", "Digite sua senha.");
-      return;
-    }
+    if (!senha.trim()) return alert("Digite sua senha antes.");
 
     try {
       setLoading(true);
+      await api.post("/usuarios/delete-with-password", { password: senha });
 
-      const token = await AsyncStorage.getItem("token");
-
-      const res = await fetch("http://SEU_BACKEND/usuarios/delete-with-password", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ password }),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        Alert.alert("Erro", data.error || "Não foi possível deletar.");
-        return;
-      }
-
-      // limpar token e logout
       await AsyncStorage.removeItem("token");
+      await AsyncStorage.removeItem("usuario");
       await AsyncStorage.removeItem("playerPhoto");
 
-      Alert.alert("Conta excluída", "Sua conta foi removida.", [
-        { text: "OK", onPress: () => (window.location.href = "/") },
-      ]);
+      alert("Conta excluída com sucesso!");
+      router.replace("/"); // volta para login
     } catch (error) {
-      Alert.alert("Erro", "Falha ao tentar excluir.");
+      alert(error.response?.data?.error || "Erro ao excluir conta");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#1A1A1A", padding: 20 }}>
-      <Text style={{ color: "white", fontSize: 28, fontWeight: "bold", marginBottom: 20 }}>
-        Deletar Conta
-      </Text>
+    <SafeAreaView style={styles.container} edges={["left", "right"]}>
+      <ImageBackground source={bg} style={styles.image}>
+        <View style={styles.viewcontainer}>
+          <View style={styles.forms}>
+            <Text style={styles.textocontainer}>Excluir Conta</Text>
 
-      <Text style={{ color: "white", fontSize: 18, marginBottom: 10 }}>
-        Digite sua senha para confirmar:
-      </Text>
+            <Text style={styles.campos}>Confirme sua senha:</Text>
 
-      <TextInput
-        placeholder="Senha"
-        placeholderTextColor="#888"
-        secureTextEntry
-        value={password}
-        onChangeText={setPassword}
-        style={{
-          backgroundColor: "#333",
-          padding: 15,
-          borderRadius: 8,
-          color: "white",
-          marginBottom: 20,
-        }}
-      />
+            <TextInput
+              style={[styles.field, { paddingRight: 40 }]}
+              placeholder="Digite sua senha"
+              placeholderTextColor="#ccc"
+              value={senha}
+              onChangeText={setSenha}
+              secureTextEntry={!showSenha}
+            />
 
-      <TouchableOpacity
-        onPress={handleDelete}
-        disabled={loading}
-        style={{
-          backgroundColor: "#B00020",
-          padding: 15,
-          borderRadius: 8,
-          alignItems: "center",
-        }}
-      >
-        <Text style={{ color: "white", fontSize: 18, fontWeight: "bold" }}>
-          {loading ? "Excluindo..." : "Excluir minha conta"}
-        </Text>
-      </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => setShowSenha(!showSenha)}
+              style={{ alignSelf: "flex-end", marginTop: -36, marginRight: 10, padding: 6 }}
+            >
+              <Ionicons name={showSenha ? "eye-off" : "eye"} size={24} color="#ccc" />
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[styles.button, { backgroundColor: "#B00020", marginTop: 20 }]}
+              onPress={handleDelete}
+              disabled={loading}
+            >
+              <Text style={{ fontSize: 16, fontFamily: "Regular", color: "white", textAlign: "center" }}>
+                {loading ? "Excluindo..." : "Excluir minha conta"}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </ImageBackground>
     </SafeAreaView>
   );
 }

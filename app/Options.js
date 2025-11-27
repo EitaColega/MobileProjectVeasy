@@ -94,9 +94,9 @@ const Options = () => {
 							</TouchableOpacity>
 						</Link>
 
-						<Link href="/Options" asChild>
+						<Link href="/deleteAccount" asChild>
 							<TouchableOpacity style={styleshome.settingbullets}>
-								<Text style={styleshome.textbullets}>Sair</Text>
+								<Text style={styleshome.textbullets}>Deletar Conta</Text>
 							</TouchableOpacity>
 						</Link>
 
