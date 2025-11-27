@@ -95,32 +95,6 @@ npm install
 
 ---
 
-## Como configurar o projeto
-
-1. **Instalação do back-end:**
-
-   ```bash
-   cd backend
-   npm install
-   ```
-2. **Instalação do front-end:**
-
-   ```bash
-   cd ..
-   npm install
-   ```
-3. **Configuração do arquivo .env:**
-
-   * Copie `.env.example` para `.env`
-   * Preencha as variáveis de ambiente necessárias
-4. **Executar o projeto em modo desenvolvimento:**
-
-   ```bash
-   npm run dev
-   ```
-
----
-
 <p align="center">
   Obrigado a todos os envolvidos na construção e evolução do Veasy
 </p>
