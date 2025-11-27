@@ -1,0 +1,89 @@
+{
+    "date": "2025-11-26",
+    "deck": {
+        "deck_id": "deck_26000015-26000068-27000007-26000009-26000018-26000011-28000026-26000052_container",
+        "data_name": "baby-dragon-ev1,battle-healer,elixir-collector,golem,mini-pekka,valkyrie-ev1,vines,zappies",
+        "name_desktop": "Golem Evo BBD EvoValk Vines",
+        "name_mobile": "Golem Evo BBD EvoValk Vines",
+        "cards": [
+            {
+                "alt": "Baby Dragon",
+                "card_key": "baby-dragon-ev1",
+                "image": "https://cdns3.royaleapi.com/cdn-cgi/image/w=150,h=180,format=auto/static/img/cards/v8-7d088998/baby-dragon-ev1.png"
+            },
+            {
+                "alt": "Valkyrie",
+                "card_key": "valkyrie-ev1",
+                "image": "https://cdns3.royaleapi.com/cdn-cgi/image/w=150,h=180,format=auto/static/img/cards/v8-7d088998/valkyrie-ev1.png"
+            },
+            {
+                "alt": "Golem",
+                "card_key": "golem",
+                "image": "https://cdns3.royaleapi.com/cdn-cgi/image/w=150,h=180,format=auto/static/img/cards/v8-7d088998/golem.png"
+            },
+            {
+                "alt": "Mini P.E.K.K.A",
+                "card_key": "mini-pekka",
+                "image": "https://cdns3.royaleapi.com/cdn-cgi/image/w=150,h=180,format=auto/static/img/cards/v8-7d088998/mini-pekka.png"
+            },
+            {
+                "alt": "Battle Healer",
+                "card_key": "battle-healer",
+                "image": "https://cdns3.royaleapi.com/cdn-cgi/image/w=150,h=180,format=auto/static/img/cards/v8-7d088998/battle-healer.png"
+            },
+            {
+                "alt": "Vines",
+                "card_key": "vines",
+                "image": "https://cdns3.royaleapi.com/cdn-cgi/image/w=150,h=180,format=auto/static/img/cards/v8-7d088998/vines.png"
+            },
+            {
+                "alt": "Zappies",
+                "card_key": "zappies",
+                "image": "https://cdns3.royaleapi.com/cdn-cgi/image/w=150,h=180,format=auto/static/img/cards/v8-7d088998/zappies.png"
+            },
+            {
+                "alt": "Elixir Collector",
+                "card_key": "elixir-collector",
+                "image": "https://cdns3.royaleapi.com/cdn-cgi/image/w=150,h=180,format=auto/static/img/cards/v8-7d088998/elixir-collector.png"
+            }
+        ],
+        "copy_link": "https://link.clashroyale.com/en?clashroyale://copyDeck?deck=26000015;26000011;26000009;26000018;26000068;28000026;26000052;27000007&tt=159000000&l=Royals",
+        "qr_code": "clashroyale://copyDeck?deck=26000015;26000011;26000009;26000018;26000068;28000026;26000052;27000007&tt=159000000&l=Royals",
+        "follow_button": {
+            "action": "follow",
+            "category": "deck",
+            "name": "baby-dragon-ev1,battle-healer,elixir-collector,golem,mini-pekka,valkyrie-ev1,vines,zappies"
+        },
+        "usage_percent_label": "0.3% 1",
+        "usage_absolute_label": "1",
+        "avg_elixir": "Avg Elixir  4.6",
+        "four_card_cycle": "4-Card Cycle  15.0",
+        "mobile_table": {
+            "rating": "64",
+            "usage_absolute": "10000",
+            "wins_percent": "56.8%",
+            "draw_percent": "0.1%",
+            "loss_percent": "43.1%"
+        },
+        "desktop_table": {
+            "rating": "64",
+            "usage_percent": "0.3%",
+            "wins_percent": "56.8%",
+            "draw_percent": "0.1%",
+            "loss_percent": "43.1%",
+            "usage_absolute": "10,000",
+            "wins_absolute": "5,684",
+            "draw_absolute": "9",
+            "loss_absolute": "4,307"
+        },
+        "win_rate_bars": {
+            "wins_pc": "56",
+            "loss_pc": "44"
+        },
+        "top_player": {
+            "player_name": "WILLIAM",
+            "trophies": "16012",
+            "profile_url": "/player/98UQC2JL"
+        }
+    }
+}

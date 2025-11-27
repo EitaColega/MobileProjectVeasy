@@ -7,6 +7,16 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model ResetToken {
+  id        Int      @id @default(autoincrement())
+  token     String
+  expiresAt DateTime
+  usuario   Usuario  @relation(fields: [usuarioId], references: [id_usuario], onDelete: Cascade)
+  usuarioId Int
+
+  @@index([usuarioId])
+}
+
 model Usuario {
   id_usuario Int      @id @default(autoincrement())
   nome       String   @db.VarChar(50)
@@ -14,47 +24,49 @@ model Usuario {
   senha      String   @db.VarChar(255)
   criado_em  DateTime @default(now())
 
-  jogador    Jogador?   // 1 usuário -> 1 jogador
+  jogador Jogador?
+
+  resetTokens ResetToken[]
 }
 
 model Jogador {
-  id_jogador  Int      @id @default(autoincrement())
-  clash_id    String   @unique @db.VarChar(18)   // Tag do Clash Royale (#XXXXX)
-  nome        String   @db.VarChar(50)
-  nivel       Int
-  trofeus     Int
-  pais        String?  @db.VarChar(10)           // Código do país (opcional)
+  id_jogador Int     @id @default(autoincrement())
+  clash_id   String  @unique @db.VarChar(18) // Tag do Clash Royale (#XXXXX)
+  nome       String  @db.VarChar(50)
+  nivel      Int
+  trofeus    Int
+  pais       String? @db.VarChar(10) // Código do país (opcional)
 
   // Relacionamento 1:1 com Usuario
-  id_usuario  Int      @unique
-  usuario     Usuario  @relation(fields: [id_usuario], references: [id_usuario])
+  id_usuario Int     @unique
+  usuario    Usuario @relation(fields: [id_usuario], references: [id_usuario])
 
   // Relacionamento com Cla
-  id_cla      Int?
-  cla         Cla?     @relation(fields: [id_cla], references: [id_cla])
+  id_cla Int?
+  cla    Cla? @relation(fields: [id_cla], references: [id_cla])
 
   decks       Deck[]
   estatistica Estatistica_Jogador?
   logs        Log_Acao[]
-  partidas1   Partida[] @relation("Jogador1")
-  partidas2   Partida[] @relation("Jogador2")
+  partidas1   Partida[]            @relation("Jogador1")
+  partidas2   Partida[]            @relation("Jogador2")
   torneios    Torneio_Jogador[]
 }
 
 model Cla {
-  id_cla    Int        @id @default(autoincrement())
-  nome      String     @db.VarChar(50)
-  descricao String     @db.VarChar(255)
+  id_cla    Int       @id @default(autoincrement())
+  nome      String    @db.VarChar(50)
+  descricao String    @db.VarChar(255)
   nivel     Int
-  regiao    String     @db.VarChar(20)
+  regiao    String    @db.VarChar(20)
   jogadores Jogador[]
 }
 
 model Deck {
-  id_deck    Int        @id @default(autoincrement())
-  nome       String     @db.VarChar(50)
+  id_deck    Int          @id @default(autoincrement())
+  nome       String       @db.VarChar(50)
   id_jogador Int
-  jogador    Jogador    @relation(fields: [id_jogador], references: [id_jogador])
+  jogador    Jogador      @relation(fields: [id_jogador], references: [id_jogador])
   cartas     Deck_Carta[]
 }
 
@@ -96,8 +108,8 @@ model Partida {
 }
 
 model Arena {
-  id_arena           Int        @id @default(autoincrement())
-  nome               String     @db.VarChar(50)
+  id_arena           Int       @id @default(autoincrement())
+  nome               String    @db.VarChar(50)
   nivel_minimo       Int
   trofeus_requeridos Int
   partidas           Partida[]
@@ -125,8 +137,8 @@ model Torneio_Jogador {
 }
 
 model Estatistica_Jogador {
-  id_estatistica Int     @id @default(autoincrement())
-  id_jogador     Int     @unique
+  id_estatistica Int   @id @default(autoincrement())
+  id_jogador     Int   @unique
   vitorias       Int
   derrotas       Int
   empates        Int
@@ -136,9 +148,9 @@ model Estatistica_Jogador {
 }
 
 model Tipo_Carta {
-  id_tipo   Int      @id @default(autoincrement())
-  nome_tipo String   @db.VarChar(30)
-  descricao String   @db.VarChar(255)
+  id_tipo   Int     @id @default(autoincrement())
+  nome_tipo String  @db.VarChar(30)
+  descricao String  @db.VarChar(255)
   cartas    Carta[]
 }
 

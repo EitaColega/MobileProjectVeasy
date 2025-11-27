@@ -1,4 +1,15 @@
 -- CreateTable
+CREATE TABLE `ResetToken` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `token` VARCHAR(191) NOT NULL,
+    `expiresAt` DATETIME(3) NOT NULL,
+    `usuarioId` INTEGER NOT NULL,
+
+    INDEX `ResetToken_usuarioId_idx`(`usuarioId`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
 CREATE TABLE `Usuario` (
     `id_usuario` INTEGER NOT NULL AUTO_INCREMENT,
     `nome` VARCHAR(50) NOT NULL,
@@ -144,6 +155,9 @@ CREATE TABLE `Log_Acao` (
 
     PRIMARY KEY (`id_log`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- AddForeignKey
+ALTER TABLE `ResetToken` ADD CONSTRAINT `ResetToken_usuarioId_fkey` FOREIGN KEY (`usuarioId`) REFERENCES `Usuario`(`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Jogador` ADD CONSTRAINT `Jogador_id_usuario_fkey` FOREIGN KEY (`id_usuario`) REFERENCES `Usuario`(`id_usuario`) ON DELETE RESTRICT ON UPDATE CASCADE;

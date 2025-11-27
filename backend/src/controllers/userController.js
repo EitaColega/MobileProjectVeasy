@@ -25,9 +25,9 @@ export const createUsuario = async (req, res) => {
       where: { email },
     });
 
-    if (usuarioExistente) {
-      return res.status(400).json({ error: "Email já cadastrado" });
-    }
+  if (usuarioExistente) {
+    return res.status(400).json({ error: "Email já está cadastrado" });
+  }
 
     // Criptografa a senha
     const senhaCriptografada = await bcrypt.hash(senha, 10);

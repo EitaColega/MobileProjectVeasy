@@ -8,27 +8,41 @@ import { Ionicons } from "@expo/vector-icons";
 
 const API_URL = process.env.EXPO_PUBLIC_API_URL;
 
-
 const image = require('../assets/background.jpg');
 
 const Register = () => {
+  
   const [emailfield, setEmailField] = useState('');
   const [senhafield, setSenhaField] = useState('');
   const [confirmfield, setConfirmField] = useState('');
   const [showSenha, setShowSenha] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
 
+  // 📌 Função para registrar o usuário
   const registrarUsuario = async () => {
-    if (!emailfield || !senhafield || !confirmfield) {
-      alert("Preencha todos os campos!");
-      return;
-    }
+    
+    // ----- VALIDAÇÕES -----
 
-    if (senhafield !== confirmfield) {
-      alert("As senhas não coincidem!");
-      return;
-    }
+    if (!emailfield || !senhafield || !confirmfield)
+      return alert("Preencha todos os campos!");
 
+    if (!emailfield.includes("@"))
+      return alert("Digite um email válido!");
+
+    if (senhafield.length < 6)
+      return alert("A senha deve ter no mínimo 6 caracteres!");
+
+    if (!/[A-Za-z]/.test(senhafield))
+      return alert("A senha deve conter pelo menos uma letra.");
+
+    if (!/[0-9]/.test(senhafield))
+      return alert("A senha deve conter pelo menos um número.");
+
+    if (senhafield !== confirmfield)
+      return alert("As senhas não coincidem!");
+
+
+    // ----- REQUISIÇÃO -----
     try {
       const resposta = await fetch(`${API_URL}/usuarios`, {
         method: "POST",
@@ -42,16 +56,20 @@ const Register = () => {
         }),
       });
 
-        if (resposta.status === 201) {
-        const usuario = await resposta.json(); // <- pega o usuário criado
+      const usuario = await resposta.json();
+      global.usuario = usuario;
 
-        global.usuario = usuario; // <- guarda o usuário GLOBAL
-
+      if (resposta.status === 201) {
         alert("Usuário registrado com sucesso!");
         router.push("/RegisterId");
-      } else {
+      } 
+      else if (resposta.status === 400 && usuario.error === "Email já está cadastrado") {
+        alert("Esse email já está em uso! Tente outro.");
+      } 
+      else {
         alert("Erro ao registrar usuário!");
       }
+
     } catch (error) {
       alert("Falha ao conectar ao servidor!");
     }
@@ -67,7 +85,7 @@ const Register = () => {
       <SafeAreaView style={styles.container} edges={['left', 'right']}>
         <ImageBackground source={image} style={styles.image}>
           <View style={styles.viewcontainer}>
-            
+
             {/* HEADER */}
             <View style={styles.header}>
               <Text style={styles.text}>Veasy</Text>
@@ -85,6 +103,8 @@ const Register = () => {
                 placeholderTextColor="#ccc"
                 value={emailfield}
                 onChangeText={setEmailField}
+                autoCapitalize="none"
+                keyboardType="email-address"
               />
 
               {/* SENHA */}
@@ -108,7 +128,7 @@ const Register = () => {
               <Text style={styles.campos}> Confirmar Senha: </Text>
               <TextInput
                 style={[styles.field, { paddingRight: 40 }]}
-                placeholder="Confirmar Super Segura"
+                placeholder="Confirmar Senha"
                 placeholderTextColor="#ccc"
                 value={confirmfield}
                 onChangeText={setConfirmField}
@@ -121,16 +141,16 @@ const Register = () => {
                 <Ionicons name={showConfirm ? "eye-off" : "eye"} size={24} color="#ccc" />
               </TouchableOpacity>
 
-              {/* BOTÃO DE REGISTRO */}
+              {/* BOTÃO REGISTRAR */}
               <TouchableOpacity style={styles.button} onPress={registrarUsuario}>
                 <Text style={{ fontSize: 16, fontFamily: 'Regular', color: 'white', textAlign: 'center' }}>
                   Registrar
                 </Text>
               </TouchableOpacity>
 
-              {/* BOTÃO VOLTAR/LOGIN */}
+              {/* VOLTAR */}
               <TouchableOpacity onPress={() => router.back()}>
-                <Text style={{ color: "white", fontFamily: "Bold", textAlign: "center", marginTop:32, fontSize:16}}>
+                <Text style={{ color: "white", fontFamily: "Bold", textAlign: "center", marginTop: 32, fontSize: 16 }}>
                   <Text style={{ color: "white", fontFamily: "Regular" }}>Já tem uma conta? </Text>Entrar
                 </Text>
               </TouchableOpacity>

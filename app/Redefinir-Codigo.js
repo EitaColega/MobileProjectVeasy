@@ -1,69 +1,116 @@
-import { ImageBackground, StyleSheet, Text, View, TextInput, Button, TouchableOpacity, Pressable } from 'react-native';
-import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
-import React, { useState } from 'react';
-import { useFonts } from 'expo-font';
-import styles from '../assets/css/Styles';
-import { Link, router } from 'expo-router';
-import Ionicons from '@expo/vector-icons/Ionicons';
+import { ImageBackground, Text, View, TextInput, TouchableOpacity, Alert } from "react-native";
+import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
+import React, { useState } from "react";
+import { useFonts } from "expo-font";
+import styles from "../assets/css/Styles";
+import { router, useLocalSearchParams } from "expo-router";
+import api from "../services/api";
 
-const image = require('../assets/background.jpg');
+const image = require("../assets/background.jpg");
 
-const RedefinirCodigo = () => {
-    const [codigofield, setCodigoField] = useState('');
-    const [codigo, setCodigo] = useState('');
-  
-    const handleRegister = () => {
-        router.push('/Register');
-
-    };
+const RedefinirCodigo = () => { 
+    
+    const [token, setToken] = useState("");
+    const { email } = useLocalSearchParams(); 
 
     const [fontsLoaded] = useFonts({
-        Regular: require('../assets/fonts/Poppins-Medium.ttf'),
-        Bold: require('../assets/fonts/Poppins-ExtraBold.ttf')
-
+        Regular: require("../assets/fonts/Poppins-Medium.ttf"),
+        Bold: require("../assets/fonts/Poppins-ExtraBold.ttf"),
     });
+
+    const handleVerifyCode = async () => {
+        if (!token || token.length < 4) {
+            return alert("Erro, Digite o código recebido no email!");
+        }
+
+        try {
+            const response = await api.post("/reset/verify-code", {
+                email,
+                token: token,
+            });
+
+            alert("Sucesso " + response.data.message || "Código validado!");
+
+            router.push({ pathname: "/Redefinir-Senha", params: { email, token } });
+
+        } catch (error) {
+            const msg = error.response?.data?.error || "Código inválido.";
+            alert("Erro: " + msg);
+        }
+    };
 
     return (
         <SafeAreaProvider>
-            <SafeAreaView style={styles.container} edges={['left', 'right']}>
+            <SafeAreaView style={styles.container} edges={["left", "right"]}>
                 <ImageBackground source={image} style={styles.image}>
                     <View style={styles.viewcontainer}>
-                        {/* CONTAINER  */}
                         <View style={styles.header}>
-                            {/*HEADER */}
                             <Text style={styles.text}>Veasy</Text>
                         </View>
+
                         <View style={styles.forms}>
-                            {/* FORMS */}
                             <Text style={styles.textocontainer}>Redefinir Senha</Text>
-                            <Text style={{ fontSize: 16, fontFamily: 'Regular', color: 'white', textAlign: 'left', marginTop: 30, paddingLeft: 10, }}>Enviaremos um código de 6 dígitos para o email:
-                                GABIRUCORP@GMAIL.COM
-                                insira o código para redefinir sua senha! </Text>
-                                
-                            <Text style={styles.campos}></Text>
+                            
+                            <Text
+                                style={{
+                                    fontSize: 16,
+                                    fontFamily: "Regular",
+                                    color: "white",
+                                    textAlign: "left",
+                                    marginTop: 30,
+                                    paddingLeft: 10,
+                                }}
+                            >
+                                Enviamos um código de segurança para:
+                                {"\n"}
+                                <Text style={{ fontFamily: "Bold" }}>
+                                    {email}
+                                </Text>
+                                {"\n"}Digite o código para continuar.
+                            </Text>
+
+                            {/* INPUT ACEITA SOMENTE NÚMEROS */}
                             <TextInput
                                 style={styles.field}
-                                placeholder="Código"
+                                placeholder="Código de 6 dígitos"
                                 placeholderTextColor="#ccc"
-                                value={codigofield}
-                                onChangeText={setCodigoField}
-                            ></TextInput>
+                                value={token}
+                                keyboardType="numeric"
+                                maxLength={6}
+                                onChangeText={(text) => {
+                                    const numericOnly = text.replace(/[^0-9]/g, "");
+                                    setToken(numericOnly);
+                                }}
+                            />
 
-                            <TouchableOpacity style={styles.button}>
+                            {/* Confirmar */}
+                            <TouchableOpacity style={styles.button} onPress={handleVerifyCode}>
                                 <Text
-                                    style={{ fontSize: 16, fontFamily: 'Regular', color: 'white', textAlign: 'center' }}
+                                    style={{
+                                        fontSize: 16,
+                                        fontFamily: "Regular",
+                                        color: "white",
+                                        textAlign: "center",
+                                    }}
                                 >
-                                      <Link href={"/Redefinir-Senha"} style={{ color: 'white', fontFamily: 'Regular' }}>Confirmar</Link>
-                                
+                                    Confirmar
                                 </Text>
                             </TouchableOpacity>
 
-                          
-                                <TouchableOpacity onPress={() => router.back()}>
-                                    <Text style={{ color: "white", fontFamily: "Bold", textAlign: "center", marginTop:15, fontSize:16}}> Voltar </Text>
-                                </TouchableOpacity>
-                        
-
+                            {/* Voltar */}
+                            <TouchableOpacity onPress={() => router.back()}>
+                                <Text
+                                    style={{
+                                        color: "white",
+                                        fontFamily: "Bold",
+                                        textAlign: "center",
+                                        marginTop: 15,
+                                        fontSize: 16,
+                                    }}
+                                >
+                                    Voltar
+                                </Text>
+                            </TouchableOpacity>
 
                         </View>
                     </View>

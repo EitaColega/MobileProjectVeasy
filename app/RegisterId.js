@@ -4,21 +4,32 @@ import React, { useState } from 'react';
 import { useFonts } from 'expo-font';
 import styles from '../assets/css/Styles';
 import { router } from 'expo-router';
-import { Ionicons } from "@expo/vector-icons";
 import axios from "axios";
 
 const API_URL = process.env.EXPO_PUBLIC_API_URL;
 
 const RegisterId = () => {
+
     const [clashId, setClashId] = useState('');
     const [loading, setLoading] = useState(false);
 
-    // ⚠️ usuário salvo globalmente na tela Register!
     const idUsuario = global.usuario?.id_usuario;
 
+    // 🔒 Bloqueia caracteres inválidos e força maiúsculo
+    const handleChangeClashId = (text) => {
+        const formatted = text.replace(/[^a-zA-Z0-9]/g, "");
+        setClashId(formatted.toUpperCase());
+    };
+
     const handleRegisterId = async () => {
-        if (!clashId.trim()) return alert("Digite seu ID do Clash Royale!");
-        if (!idUsuario) return alert("Erro: usuário não encontrado. Faça o login novamente.");
+        if (!clashId.trim())
+            return alert("Digite seu ID do Clash Royale!");
+
+        if (clashId.length < 8)
+            return alert("ID inválido — o Clash ID deve ter pelo menos 8 caracteres.");
+
+        if (!idUsuario)
+            return alert("Erro: usuário não encontrado. Faça o login novamente.");
 
         try {
             setLoading(true);
@@ -28,11 +39,11 @@ const RegisterId = () => {
                 clashId
             });
 
-            // atualiza os dados do usuário com o nome real
             global.usuario.nome = resp.data.nome;
 
             alert("Jogador cadastrado com sucesso!");
             router.push('/HomePlayer');
+
         } catch (err) {
             if (err.response?.data?.error) alert(err.response.data.error);
             else alert("Erro ao cadastrar jogador!");
@@ -65,7 +76,8 @@ const RegisterId = () => {
                                 placeholder="JGCUU99V2"
                                 placeholderTextColor="#ccc"
                                 value={clashId}
-                                onChangeText={setClashId}
+                                onChangeText={handleChangeClashId}
+                                autoCapitalize="characters"
                             />
 
                             <TouchableOpacity
