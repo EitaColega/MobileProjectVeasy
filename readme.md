@@ -21,6 +21,7 @@ O objetivo é oferecer uma experiência simples e eficiente, reunindo dados rele
 
 ## Tecnologias utilizadas
 
+
 ### Front-end
 
 * Axios v1.13.2
@@ -66,7 +67,23 @@ O objetivo é oferecer uma experiência simples e eficiente, reunindo dados rele
 ---
 
 ## Como configurar o projeto
+1. Clone o projeto com o comando:
+`git clone https://github.com/lfernandonassau/NASSAU-AV02-backend-framework-equipe01.git`
 
+2. Então abra o projeto instale as depedências do front e back-end com
+
+```
+npm install
+cd backend
+npm install
+```
+
+3. Após isso remova o sufixo `.example`, dos arquivos `.env.example` e os configure respectivamente.
+
+4. Logo após use o comando `npx prisma migrate dev` do diretório `backend`
+
+5. Então use o comando `npm run dev` para iniciar a aplicação.
+---
 ## Colaboradores do projeto
 
 * [Alan Sérgio Rodrigues de Carvalho (01697157)](https://github.com/EitaColega)
