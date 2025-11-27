@@ -1,7 +1,8 @@
-// backend/src/routes/decks.js
+// backend/src/routes/decksRoutes.js
 import { Router } from "express";
 import axios from "axios";
 import { getDailyDeck } from "../services/deckapi.js";
+import { fetchLeaders, formatLeadersForFrontend } from "../services/leaders.js";
 
 const router = Router();
 
@@ -21,46 +22,42 @@ function dlog(...msg) {
 }
 
 /* ============================================================
-   FORMATAÇÃO — DEIXAR O DECK IGUAL AO PADRÃO DO FRONTEND
+   FORMATAÇÃO DE DECK PARA FRONTEND
    ============================================================ */
 function formatDeckForFrontend(bestDeck) {
     return [
         {
             cards: bestDeck.cards.map(c => ({
-                name: c.alt,
-                elixir: null,    // scraper não tem elixir, então deixamos null
+                name: c.alt || c.name,
+                elixir: null,
                 icon: c.image
             })),
-            usage: bestDeck.usage
-                ? Number(String(bestDeck.usage).replace("%", ""))
-                : 100
+            usage: bestDeck.usage ? Number(String(bestDeck.usage).replace("%", "")) : 100
         }
     ];
 }
 
 /* ============================================================
-   ROTA: /decks/popular — RETORNA O MELHOR DECK DO SCRAPER
+   ROTA: /decks/popular
    ============================================================ */
 router.get("/popular", async (req, res) => {
     try {
         dlog("Rota: /popular");
 
-        const { fromCache, deck, best } = await getDailyDeck();
-
+        const { fromCache, data: deck, best } = await getDailyDeck();
         dlog("Deck obtido:", best);
 
         const formatted = formatDeckForFrontend(best);
-
-        return res.json(formatted);
+        res.json(formatted);
 
     } catch (e) {
         console.log("Erro ao buscar melhor deck:", e);
-        return res.status(500).json({ error: "Erro ao obter o deck do dia" });
+        res.status(500).json({ error: "Erro ao obter o deck do dia" });
     }
 });
 
 /* ============================================================
-   ROTA: /current-player — DECK REAL DO JOGADOR
+   ROTA: /current-player
    ============================================================ */
 async function buscarDeck(tag) {
     const PLAYER_TAG = tag.replace("#", "").toUpperCase();
@@ -76,7 +73,7 @@ async function buscarDeck(tag) {
 
     return [
         {
-            cards: deck.map((c) => ({
+            cards: deck.map(c => ({
                 name: c.name,
                 elixir: c.elixirCost,
                 icon: c.iconUrls.medium
@@ -102,9 +99,6 @@ router.get("/current-player", async (req, res) => {
     }
 });
 
-/* ============================================================
-   ROTA CURTA: /current — MESMO QUE /current-player
-   ============================================================ */
 router.get("/current", async (req, res) => {
     try {
         const { tag = FALLBACK_TAG } = req.query;
@@ -120,5 +114,22 @@ router.get("/current", async (req, res) => {
         res.status(500).json({ error: "Erro ao buscar deck do jogador" });
     }
 });
+
+router.get("/leaders", async (req, res) => {
+    try {
+        const limit = parseInt(req.query.limit) || 3;
+        console.log("Rota: /leaders, limit:", limit);
+
+        const leaders = await fetchLeaders("https://royaleapi.com/decks/leaderboard", limit);
+
+        const formatted = formatLeadersForFrontend(leaders);
+
+        res.json(formatted);
+    } catch (e) {
+        console.log("Erro ao buscar líderes:", e);
+        res.status(500).json({ error: "Erro ao obter líderes" });
+    }
+});
+
 
 export default router;
