@@ -26,11 +26,12 @@ export const PlayerProvider = ({ children }) => {
         headers: { Authorization: `Bearer ${token}` }
       });
 
-      const savedPhoto = await AsyncStorage.getItem("player_photo");
+      const userId = response.data.id_usuario;
+      const savedPhoto = await AsyncStorage.getItem(`player_photo_${userId}`);
 
       setPlayer({
         ...response.data,
-        photo: savedPhoto || response.data.photo
+        photo: savedPhoto || response.data.photo || null
       });
 
     } catch (error) {
@@ -42,8 +43,12 @@ export const PlayerProvider = ({ children }) => {
 
   const updatePhoto = async (uri) => {
     try {
+      const userId = player.id_usuario;
+
       setPlayer((old) => ({ ...old, photo: uri }));
-      await AsyncStorage.setItem("player_photo", uri);
+
+      await AsyncStorage.setItem(`player_photo_${userId}`, uri);
+
     } catch (e) {
       console.log("Erro ao salvar foto:", e);
     }
