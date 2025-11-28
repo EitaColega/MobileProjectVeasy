@@ -157,7 +157,74 @@ const stylesplayer = StyleSheet.create({
 		borderRadius: 80,
 		borderWidth: 3,
 		borderColor: 'white'
-	}
+	},
+
+	cardRow: {
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		width: '100%',
+	},
+	cardContainer: {
+		width: '23%', // 4 por linha com espaçamento
+		alignItems: 'center',
+	},
+	cardImage: {
+		width: 68,
+		height: 68,
+		borderRadius: 8,
+		backgroundColor: '#222',
+	},
+	cardName: {
+		marginTop: 6,
+		color: 'white',
+		fontSize: 12,
+		textAlign: 'center',
+	},
+
+	cardBox: {
+  width: 70,
+  height: 90,
+  borderRadius: 12,
+  overflow: "hidden",
+  backgroundColor: "rgba(255,255,255,0.05)",
+},
+
+cardImageNew: {
+  width: "100%",
+  height: "100%",
+  borderRadius: 12,
+},
+
+cardPlaceholder: {
+  width: "100%",
+  height: "100%",
+  justifyContent: "center",
+  alignItems: "center",
+  borderRadius: 12,
+  backgroundColor: "rgba(255,255,255,0.05)",
+},
+
+deckWrapper: {
+  marginTop: 25,
+  paddingVertical: 18,
+  paddingHorizontal: 12,
+  width: "92%",
+  alignSelf: "center",
+  backgroundColor: "rgba(0,0,0,0.25)",
+  borderRadius: 20,
+  borderWidth: 1,
+  borderColor: "rgba(255,255,255,0.1)",
+},
+
+deckTitle: {
+  color: "#fff",
+  fontSize: 20,
+  fontWeight: "bold",
+  textAlign: "center",
+  marginBottom: 14,
+},
+
+
 });
 
 export default stylesplayer;
