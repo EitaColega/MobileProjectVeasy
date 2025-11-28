@@ -13,7 +13,7 @@ export const cadastrarJogador = async (req, res) => {
 
     // === 1) Buscar dados na API ===
     const resp = await axios.get(
-      `${API_BASE_URL}/players/%23${jogador.clash_id}`,
+      `https://api.clashroyale.com/v1/players/%23${clashId}`,
       {
         headers: { Authorization: `Bearer ${TOKEN}` }
       }
