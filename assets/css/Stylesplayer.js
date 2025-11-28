@@ -71,7 +71,9 @@ const stylesplayer = StyleSheet.create({
 	name: {
 		color: 'white',
 		fontSize: 26,
-		fontFamily: 'Regular'
+		fontFamily: 'Regular',
+		marginTop: -18,
+		marginBottom: 18, 
 	},
 
 	info: {
@@ -125,7 +127,7 @@ const stylesplayer = StyleSheet.create({
 	deckBox: {
 		marginTop: 5,
 		backgroundColor: 'rgba(11, 10, 10, 0.47)',
-		width: 330,
+		width: 320,
 		height: 150,
 		borderColor: '#EEEEEE66',
 		borderWidth: 2,
@@ -183,7 +185,7 @@ const stylesplayer = StyleSheet.create({
 
 	cardBox: {
   width: 70,
-  height: 90,
+  height: 60,
   borderRadius: 12,
   overflow: "hidden",
   backgroundColor: "rgba(255,255,255,0.05)",
@@ -205,7 +207,7 @@ cardPlaceholder: {
 },
 
 deckWrapper: {
-  marginTop: 25,
+  marginTop: 8,
   paddingVertical: 18,
   paddingHorizontal: 12,
   width: "100%",
