@@ -20,16 +20,14 @@ export const createUsuario = async (req, res) => {
   try {
     const { nome, email, senha } = req.body;
 
-    // Verifica se o email já existe
     const usuarioExistente = await prisma.usuario.findUnique({
       where: { email },
     });
 
-  if (usuarioExistente) {
-    return res.status(400).json({ error: "Email já está cadastrado" });
-  }
+    if (usuarioExistente) {
+      return res.status(400).json({ error: "Email já está cadastrado" });
+    }
 
-    // Criptografa a senha
     const senhaCriptografada = await bcrypt.hash(senha, 10);
 
     const novoUsuario = await prisma.usuario.create({
@@ -42,7 +40,7 @@ export const createUsuario = async (req, res) => {
   }
 };
 
-/* Atualiza um usuário existente */
+/* Atualiza um usuário */
 export const updateUsuario = async (req, res) => {
   try {
     const { id } = req.params;
@@ -50,7 +48,6 @@ export const updateUsuario = async (req, res) => {
 
     const dataUpdate = { nome, email };
 
-    // Atualiza senha apenas se enviada
     if (senha) {
       dataUpdate.senha = await bcrypt.hash(senha, 10);
     }
@@ -66,15 +63,14 @@ export const updateUsuario = async (req, res) => {
   }
 };
 
-/* Remove um usuário */
+/* Remove um usuário autenticado */
 export const deleteUsuario = async (req, res) => {
   try {
     const { password } = req.body;
-    const userId = req.userId;
+    const userId = req.userId; // vindo do token JWT
 
     const user = await prisma.usuario.findUnique({
       where: { id_usuario: userId },
-      include: { jogador: true }
     });
 
     if (!user) return res.status(404).json({ error: "Usuário não encontrado" });
@@ -82,25 +78,27 @@ export const deleteUsuario = async (req, res) => {
     const senhaValida = await bcrypt.compare(password, user.senha);
     if (!senhaValida) return res.status(401).json({ error: "Senha incorreta" });
 
-    // Delete usuário - CASCADE remove jogador automaticamente
+    // Remove dependências
+    await prisma.jogador.deleteMany({ where: { id_usuario: userId } });
+    await prisma.resetToken.deleteMany({ where: { usuarioId: userId } });
+
+    // Agora deleta o usuário
     await prisma.usuario.delete({
-      where: { id_usuario: userId }
+      where: { id_usuario: userId },
     });
 
-    return res.json({ message: "Usuário e jogador deletados com sucesso" });
+    return res.json({ message: "Usuário apagado com sucesso" });
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Erro ao excluir usuário" });
   }
 };
 
-
-/* Login do usuário */
+/* Login */
 export const loginUsuario = async (req, res) => {
   try {
     const { email, senha } = req.body;
 
-    // Busca usuário pelo email
     const usuario = await prisma.usuario.findUnique({
       where: { email },
     });
@@ -109,13 +107,11 @@ export const loginUsuario = async (req, res) => {
       return res.status(404).json({ message: "Usuário não encontrado" });
     }
 
-    // Verifica senha
     const senhaValida = await bcrypt.compare(senha, usuario.senha);
     if (!senhaValida) {
       return res.status(401).json({ message: "Senha incorreta" });
     }
 
-    // Gera token JWT
     const token = jwt.sign(
       { id: usuario.id_usuario },
       process.env.JWT_SECRET,

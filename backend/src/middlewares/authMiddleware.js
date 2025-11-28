@@ -1,19 +1,20 @@
 import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
-dotenv.config();
+import "dotenv/config";
 
 export const authMiddleware = (req, res, next) => {
-  const token = req.headers["authorization"]?.replace("Bearer ", "");
+  const authHeader = req.headers.authorization;
 
-  if (!token) {
+  if (!authHeader) {
     return res.status(401).json({ error: "Token não fornecido" });
   }
 
+  const [, token] = authHeader.split(" ");
+
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.userId = decoded.id; 
+    req.userId = decoded.id;
     next();
   } catch (err) {
-    return res.status(403).json({ error: "Token inválido ou expirado" });
+    return res.status(401).json({ error: "Token inválido" });
   }
 };

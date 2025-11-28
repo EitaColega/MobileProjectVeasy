@@ -36,11 +36,9 @@ model Jogador {
   trofeus    Int
   pais       String? @db.VarChar(10)
 
-  // Relacionamento 1:1 com Usuario
   id_usuario Int     @unique
   usuario    Usuario @relation(fields: [id_usuario], references: [id_usuario], onDelete: Cascade)
 
-  // Relacionamento com Cla
   id_cla Int?
   cla    Cla? @relation(fields: [id_cla], references: [id_cla])
 
@@ -65,7 +63,7 @@ model Deck {
   id_deck    Int          @id @default(autoincrement())
   nome       String       @db.VarChar(50)
   id_jogador Int
-  jogador    Jogador      @relation(fields: [id_jogador], references: [id_jogador])
+  jogador    Jogador      @relation(fields: [id_jogador], references: [id_jogador], onDelete: Cascade)
   cartas     Deck_Carta[]
 }
 
@@ -86,7 +84,7 @@ model Deck_Carta {
   id_carta    Int
   nivel_carta Int
 
-  deck  Deck  @relation(fields: [id_deck], references: [id_deck])
+  deck  Deck  @relation(fields: [id_deck], references: [id_deck], onDelete: Cascade)
   carta Carta @relation(fields: [id_carta], references: [id_carta])
 
   @@id([id_deck, id_carta])
@@ -101,8 +99,8 @@ model Partida {
   id_jogador2 Int
   id_arena    Int
 
-  jogador1 Jogador @relation("Jogador1", fields: [id_jogador1], references: [id_jogador])
-  jogador2 Jogador @relation("Jogador2", fields: [id_jogador2], references: [id_jogador])
+  jogador1 Jogador @relation("Jogador1", fields: [id_jogador1], references: [id_jogador], onDelete: Cascade)
+  jogador2 Jogador @relation("Jogador2", fields: [id_jogador2], references: [id_jogador], onDelete: Cascade)
   arena    Arena   @relation(fields: [id_arena], references: [id_arena])
 }
 
@@ -130,7 +128,7 @@ model Torneio_Jogador {
   pontuacao  Int
 
   torneio Torneio @relation(fields: [id_torneio], references: [id_torneio])
-  jogador Jogador @relation(fields: [id_jogador], references: [id_jogador])
+  jogador Jogador @relation(fields: [id_jogador], references: [id_jogador], onDelete: Cascade)
 
   @@id([id_torneio, id_jogador])
 }
@@ -143,7 +141,7 @@ model Estatistica_Jogador {
   empates        Int
   taxa_vitoria   Float
 
-  jogador Jogador @relation(fields: [id_jogador], references: [id_jogador])
+  jogador Jogador @relation(fields: [id_jogador], references: [id_jogador], onDelete: Cascade)
 }
 
 model Tipo_Carta {
@@ -159,5 +157,6 @@ model Log_Acao {
   acao       String   @db.VarChar(50)
   data_hora  DateTime @default(now())
   detalhes   String   @db.VarChar(255)
-  jogador    Jogador  @relation(fields: [id_jogador], references: [id_jogador])
+
+  jogador Jogador @relation(fields: [id_jogador], references: [id_jogador], onDelete: Cascade)
 }
