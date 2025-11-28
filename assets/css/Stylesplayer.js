@@ -126,7 +126,7 @@ const stylesplayer = StyleSheet.create({
 		marginTop: 5,
 		backgroundColor: 'rgba(11, 10, 10, 0.47)',
 		width: 330,
-		height: 180,
+		height: 150,
 		borderColor: '#EEEEEE66',
 		borderWidth: 2,
 		borderRadius: 30

@@ -31,7 +31,7 @@ const Deck = ({ title }) => {
       padding: 16,
       borderRadius: 15,
       alignItems: "center",
-      marginVertical: 10,
+      marginVertical: 20,
     }}>
       {title && (
         <Text style={{ fontSize: 22, color: "white", marginBottom: 12, textAlign: "center" }}>
@@ -43,7 +43,7 @@ const Deck = ({ title }) => {
           <Image
             key={idx}
             source={{ uri: card.icon }}
-            style={{ width: 55, height: 70, borderRadius: 8, margin: 3 }}
+            style={{ width: 55, height: 70, borderRadius: 8, margin: 12}}
           />
         ))}
       </View>

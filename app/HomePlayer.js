@@ -8,6 +8,7 @@ import * as ImagePicker from 'expo-image-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 import stylesplayer from '../assets/css/Stylesplayer';
+import styleshome from '../assets/css/Stylehome';
 
 const homeplayer = require('../assets/background.jpg');
 
@@ -107,6 +108,7 @@ export default function HomePlayer() {
 						<Link href="/HomePlayer" asChild>
 							<TouchableOpacity style={{ alignItems: 'center' }}>
 								<Ionicons name="person-circle-outline" size={42} color="#4B1664" />
+								<Text style={styleshome.FooterName}>Player</Text>
 							</TouchableOpacity>
 						</Link>
 
