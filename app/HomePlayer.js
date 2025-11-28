@@ -1,66 +1,74 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { ImageBackground, Text, View, TouchableOpacity, Image, ScrollView } from 'react-native';
+import React, { useEffect, useCallback } from 'react';
+import { 
+  ImageBackground, Text, View, TouchableOpacity, Image, 
+  BackHandler, Alert 
+} from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import { Link } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import * as ImagePicker from 'expo-image-picker';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
+
 import stylesplayer from '../assets/css/Stylesplayer';
 import styleshome from '../assets/css/Stylehome';
-import api from "../services/api";
+
+import * as PlayerContext from "./contexts/PlayerContext";
 
 const homeplayer = require('../assets/background.jpg');
 
 export default function HomePlayer() {
-  const [name, setName] = useState('');
-  const [clanName, setClanName] = useState('');
-  const [trofeus, setTrofeus] = useState('');
-  const [topTrofeus, setTopTrofeus] = useState('');
-  const [photo, setPhoto] = useState(null);
-  const [wins, setWins] = useState('');
-  const [losses, setLosses] = useState('');
-  const [explevel, setExplevel] = useState('');
-  const [deck, setDeck] = useState([]);
 
+  const {
+    player,
+    loadPlayerData,
+    updatePhoto
+  } = PlayerContext.usePlayer();
+
+  const {
+    nome,
+    clanName,
+    trofeus,
+    topTrofeus,
+    wins,
+    losses,
+    expLevel,
+    deck,
+    photo
+  } = player;
+
+  // ===========================
+  //  BOTÃO VOLTAR → SAIR DO APP
+  // ===========================
+  useEffect(() => {
+    const backAction = () => {
+      Alert.alert(
+        "Sair do aplicativo",
+        "Você deseja fechar o ClashHub?",
+        [
+          { text: "Cancelar", style: "cancel" },
+          { text: "Sim", onPress: () => BackHandler.exitApp() }
+        ]
+      );
+      return true;
+    };
+
+    const handler = BackHandler.addEventListener("hardwareBackPress", backAction);
+    return () => handler.remove();
+  }, []);
+
+  // ===========================
+  // CARREGA DADOS AO ENTRAR
+  // ===========================
   useFocusEffect(
     useCallback(() => {
-      loadPhoto();
-      fetchPlayerData();
+      loadPlayerData();
     }, [])
   );
 
-  const fetchPlayerData = async () => {
-    try {
-      const token = await AsyncStorage.getItem("token");
-      if (!token) {
-        alert("Erro: usuário não autenticado");
-        return;
-      }
-
-      const response = await api.get("/jogador/me");
-      const data = response.data;
-
-      setName(data.nome || '');
-      setTrofeus(data.trofeus ?? '');
-      setTopTrofeus(data.topTrofeus ?? '');
-      setClanName(data.clanName ?? 'Sem Clã');
-      setWins(data.wins ?? '');
-      setLosses(data.losses ?? '');
-      setExplevel(data.expLevel ?? '');
-      setDeck(Array.isArray(data.deck) ? data.deck : []);
-    } catch (err) {
-      console.log("Erro fetchPlayerData:", err.response?.data || err.message || err);
-    }
-  };
-
-  // === FOTO ===
-  const loadPhoto = async () => {
-    const saved = await AsyncStorage.getItem('playerPhoto');
-    if (saved) setPhoto(saved);
-  };
-
+  // ===========================
+  // ALTERAR FOTO
+  // ===========================
   const pickImage = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (status !== 'granted') {
@@ -75,12 +83,13 @@ export default function HomePlayer() {
 
     if (!result.canceled) {
       const uri = result.assets[0].uri;
-      await AsyncStorage.setItem('playerPhoto', uri);
-      setPhoto(uri);
+      updatePhoto(uri);
     }
   };
 
-  // === NOVO DECK SEM NOME — 4x2 CLEAN UI ===
+  // ===========================
+  //  GRADE DO DECK
+  // ===========================
   const renderDeckGrid = () => {
     const cards = [...deck];
     while (cards.length < 8) cards.push({ icon: null });
@@ -129,9 +138,9 @@ export default function HomePlayer() {
           <Text style={stylesplayer.hometext}>Perfil</Text>
 
           <View style={stylesplayer.homecontainer}>
-            
+
             <View style={stylesplayer.infoCenter}>
-              <Text style={stylesplayer.info}>Nv: {explevel}</Text>
+              <Text style={stylesplayer.info}>Nv: {expLevel}</Text>
             </View>
 
             <TouchableOpacity onPress={pickImage}>
@@ -143,20 +152,19 @@ export default function HomePlayer() {
             </TouchableOpacity>
 
             <View style={stylesplayer.infoCenter}>
-              <Text style={stylesplayer.name}> {name} </Text>
+              <Text style={stylesplayer.name}>{nome}</Text>
               <Text style={stylesplayer.info}>Clã: {clanName}</Text>
             </View>
 
             <View style={stylesplayer.infoCenter}>
               <Text style={stylesplayer.top}>
-                Troféus🏆: {trofeus}            Vitórias🏅: {wins}
+                Troféus🏆: {trofeus}     Vitórias🏅: {wins}
               </Text>
               <Text style={stylesplayer.top}>
-                Top Troféus🏆: {topTrofeus}     Derrotas❌: {losses}
+                Top Trof🏆: {topTrofeus}    Derrotas❌: {losses}
               </Text>
             </View>
 
-            {/* === NOVA UI DO DECK === */}
             <View style={stylesplayer.deckWrapper}>
               <Text style={stylesplayer.deckTitle}>Deck Atual</Text>
               {renderDeckGrid()}

@@ -208,7 +208,7 @@ deckWrapper: {
   marginTop: 25,
   paddingVertical: 18,
   paddingHorizontal: 12,
-  width: "92%",
+  width: "100%",
   alignSelf: "center",
   backgroundColor: "rgba(0,0,0,0.25)",
   borderRadius: 20,

@@ -42,7 +42,7 @@ const RegisterId = () => {
             global.usuario.nome = resp.data.nome;
 
             alert("Jogador cadastrado com sucesso!");
-            router.push('/HomePlayer');
+            router.push('/index.js');
 
         } catch (err) {
             if (err.response?.data?.error) alert(err.response.data.error);

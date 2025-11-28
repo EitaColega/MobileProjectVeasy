@@ -1,4 +1,13 @@
-import { ImageBackground, StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { 
+  ImageBackground, 
+  StyleSheet, 
+  Text, 
+  View, 
+  TextInput, 
+  TouchableOpacity, 
+  BackHandler, 
+  Alert 
+} from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import React, { useState, useEffect } from 'react';
 import { useFonts } from 'expo-font';
@@ -12,109 +21,131 @@ const image = require('../assets/background.jpg');
 
 const index = () => {  
 
-	const [emailfield, setEmailField] = useState('');
-	const [senhafield, setSenhaField] = useState('');
-	const [showSenha, setShowSenha] = useState(false);
+  const [emailfield, setEmailField] = useState('');
+  const [senhafield, setSenhaField] = useState('');
+  const [showSenha, setShowSenha] = useState(false);
 
-	const handleRegister = () => {
-		router.push('/Register');
-	};
+  
+  useEffect(() => {
+    const backAction = () => {
+      Alert.alert(
+        "Sair do aplicativo",
+        "Deseja realmente sair?",
+        [
+          { text: "Cancelar", onPress: () => null, style: "cancel" },
+          { text: "Sim", onPress: () => BackHandler.exitApp() }
+        ]
+      );
+      return true;
+    };
 
-	// 🔵 HANDLE LOGIN COM VALIDAÇÕES MELHORADAS
-	const handleLogin = async () => {
-		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
 
-		if (!emailfield.trim()) return alert("O campo de email não pode ficar vazio.");
-		if (!emailRegex.test(emailfield)) return alert("Digite um email válido. Ex: exemplo@gmail.com");
+    return () => backHandler.remove();
+  }, []);
 
-		if (!senhafield.trim()) return alert("O campo de senha não pode ficar vazio.");
-		if (senhafield.length < 6) return alert("A senha deve ter pelo menos 6 caracteres.");
-		if (!/[A-Za-z]/.test(senhafield)) return alert("A senha deve conter pelo menos uma letra.");
+  const handleRegister = () => {
+    router.push('/Register');
+  };
 
-		try {
-			const response = await api.post("/usuarios/login", {
-				email: emailfield,
-				senha: senhafield
-			});
+  // LOGIN
+  const handleLogin = async () => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-			const { token, user } = response.data;
+    if (!emailfield.trim()) return alert("O campo de email não pode ficar vazio.");
+    if (!emailRegex.test(emailfield)) return alert("Digite um email válido. Ex: exemplo@gmail.com");
 
-			await AsyncStorage.setItem("token", token);
-			await AsyncStorage.setItem("usuario", JSON.stringify(user));
+    if (!senhafield.trim()) return alert("O campo de senha não pode ficar vazio.");
+    if (senhafield.length < 6) return alert("A senha deve ter pelo menos 6 caracteres.");
+    if (!/[A-Za-z]/.test(senhafield)) return alert("A senha deve conter pelo menos uma letra.");
 
-			alert("Login realizado com sucesso!");
-			router.push("/HomePlayer");
+    try {
+      const response = await api.post("/usuarios/login", {
+        email: emailfield,
+        senha: senhafield
+      });
 
-		} catch (err) {
-			if (err.response?.status === 404) return alert("Usuário não encontrado");
-			if (err.response?.status === 401) return alert("Senha incorreta");
-			alert("Erro ao realizar login");
-		}
-	};
+      const { token, user } = response.data;
 
-	const [fontsLoaded] = useFonts({
-		Regular: require('../assets/fonts/Poppins-Medium.ttf'),
-		Bold: require('../assets/fonts/Poppins-ExtraBold.ttf')
-	});
+      await AsyncStorage.setItem("token", token);
+      await AsyncStorage.setItem("usuario", JSON.stringify(user));
 
-	return (
-		<SafeAreaProvider>
-			<SafeAreaView style={styles.container} edges={['left', 'right']}>
-				<ImageBackground source={image} style={styles.image}>
-					<View style={styles.viewcontainer}>
-						
-						<View style={styles.header}>
-							<Text style={styles.text}>Veasy</Text>
-						</View>
+      alert("Login realizado com sucesso!");
+      router.push("/HomePlayer");
 
-						<View style={styles.forms}>
-							<Text style={styles.textocontainer}>Entrar</Text>
+    } catch (err) {
+      if (err.response?.status === 404) return alert("Usuário não encontrado");
+      if (err.response?.status === 401) return alert("Senha incorreta");
+      alert("Erro ao realizar login");
+    }
+  };
 
-							<Text style={styles.campos}> Email: </Text>
-							<TextInput
-								style={styles.field}
-								placeholder="SeuEmail@email.com"
-								placeholderTextColor="#ccc"
-								value={emailfield}
-								onChangeText={setEmailField}
-							/>
+  const [fontsLoaded] = useFonts({
+    Regular: require('../assets/fonts/Poppins-Medium.ttf'),
+    Bold: require('../assets/fonts/Poppins-ExtraBold.ttf')
+  });
 
-							<Text style={styles.campos}> Senha: </Text>
-							<TextInput
-								style={[styles.field, { paddingRight: 40 }]}
-								placeholder="Senha Super Segura"
-								placeholderTextColor="#ccc"
-								value={senhafield}
-								onChangeText={setSenhaField}
-								secureTextEntry={!showSenha}
-							/>
+  return (
+    <SafeAreaProvider>
+      <SafeAreaView style={styles.container} edges={['left', 'right']}>
+        <ImageBackground source={image} style={styles.image}>
+          <View style={styles.viewcontainer}>
+            
+            <View style={styles.header}>
+              <Text style={styles.text}>Veasy</Text>
+            </View>
 
-							<TouchableOpacity
-								onPress={() => setShowSenha(!showSenha)}
-								style={{ alignSelf: "flex-end", marginTop: -36, marginRight: 10, padding: 6 }}
-							>
-								<Ionicons name={showSenha ? "eye-off" : "eye"} size={24} color="#ccc" />
-							</TouchableOpacity>
+            <View style={styles.forms}>
+              <Text style={styles.textocontainer}>Entrar</Text>
 
-							<TouchableOpacity style={styles.button} onPress={handleLogin}>
-								<Text style={{ fontSize: 16, fontFamily: 'Regular', color: 'white', textAlign: 'center' }}>
-									Entrar
-								</Text>
-							</TouchableOpacity>
+              <Text style={styles.campos}> Email: </Text>
+              <TextInput
+                style={styles.field}
+                placeholder="SeuEmail@email.com"
+                placeholderTextColor="#ccc"
+                value={emailfield}
+                onChangeText={setEmailField}
+              />
 
-							<Link href={"/Redefinir-Email"} style={{ fontSize: 16, fontFamily: 'Bold', color: 'white', textAlign: 'center', marginTop: 30 }}>
-								Esqueceu a Senha?
-							</Link>
+              <Text style={styles.campos}> Senha: </Text>
+              <TextInput
+                style={[styles.field, { paddingRight: 40 }]}
+                placeholder="Senha Super Segura"
+                placeholderTextColor="#ccc"
+                value={senhafield}
+                onChangeText={setSenhaField}
+                secureTextEntry={!showSenha}
+              />
 
-							<Text style={{ fontSize: 16, fontFamily: 'Regular', color: 'white', textAlign: 'center', marginTop: 30 }}>
-								Não tem conta? <Link href={"/Register"} style={{ color: 'white', fontFamily: 'Bold' }}>Registre-se</Link>
-							</Text>
-						</View>
-					</View>
-				</ImageBackground>
-			</SafeAreaView>
-		</SafeAreaProvider>
-	);
+              <TouchableOpacity
+                onPress={() => setShowSenha(!showSenha)}
+                style={{ alignSelf: "flex-end", marginTop: -36, marginRight: 10, padding: 6 }}
+              >
+                <Ionicons name={showSenha ? "eye-off" : "eye"} size={24} color="#ccc" />
+              </TouchableOpacity>
+
+              <TouchableOpacity style={styles.button} onPress={handleLogin}>
+                <Text style={{ fontSize: 16, fontFamily: 'Regular', color: 'white', textAlign: 'center' }}>
+                  Entrar
+                </Text>
+              </TouchableOpacity>
+
+              <Link href={"/Redefinir-Email"} style={{ fontSize: 16, fontFamily: 'Bold', color: 'white', textAlign: 'center', marginTop: 30 }}>
+                Esqueceu a Senha?
+              </Link>
+
+              <Text style={{ fontSize: 16, fontFamily: 'Regular', color: 'white', textAlign: 'center', marginTop: 30 }}>
+                Não tem conta? <Link href={"/Register"} style={{ color: 'white', fontFamily: 'Bold' }}>Registre-se</Link>
+              </Text>
+            </View>
+          </View>
+        </ImageBackground>
+      </SafeAreaView>
+    </SafeAreaProvider>
+  );
 }; 
 
 export default index;
