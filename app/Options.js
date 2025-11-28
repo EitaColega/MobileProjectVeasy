@@ -1,75 +1,35 @@
-
 import { ImageBackground, Text, View, TouchableOpacity, Image } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
-import React, { useEffect, useState, useCallback } from 'react';
+import React from 'react';
 import styleshome from '../assets/css/Stylehome';
-import { Link, useFocusEffect } from 'expo-router';
+import { Link } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import api from "../services/api";
+
+import * as PlayerContext from "./contexts/PlayerContext";
 import stylesplayer from '../assets/css/Stylesplayer';
 
-const options = require('../assets/background.jpg');
+const optionsBg = require('../assets/background.jpg');
 
-const Options = () => {
-  const [photo, setPhoto] = useState(null);
-  const [name, setName] = useState('');
+export default function Options() {
 
-  // Carrega foto salva
-  const loadPhoto = async () => {
-    try {
-      const saved = await AsyncStorage.getItem('playerPhoto');
-      if (saved) setPhoto(saved);
-    } catch (err) {
-      console.log("Erro ao carregar foto:", err);
-    }
-  };
+  // PEGANDO OS DADOS DO PLAYER CONTEXT
+  const { player } = PlayerContext.usePlayer();
 
-  // Carrega jogador logado
-  const fetchPlayerData = async () => {
-    try {
-      const token = await AsyncStorage.getItem("token");
-      if (!token) {
-        alert("Erro: usuário não autenticado");
-        return;
-      }
-
-      const response = await api.get("/jogador/me");
-      const data = response.data;
-
-      setName(data.nome || '');
-    } catch (err) {
-      console.log("Erro fetchPlayerData:", err.response?.data || err.message || err);
-    }
-  };
-
-  // Carrega quando o componente abre pela primeira vez
-  useEffect(() => {
-    fetchPlayerData();
-    loadPhoto();
-  }, []);
-
-  // Recarrega foto quando volta para tela
-  useFocusEffect(
-    useCallback(() => {
-      loadPhoto();
-    }, [])
-  );
+  const playerName = player?.nome || "";
+  const photo = player?.photo || null;
 
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styleshome.home} edges={['left', 'right']}>
-        <ImageBackground source={options} style={styleshome.homeimage}>
+        <ImageBackground source={optionsBg} style={styleshome.homeimage}>
           <View style={styleshome.overlay} />
 
-          {/* Título */}
           <Text style={styleshome.hometext}>Player Settings</Text>
 
-          {/* Conteúdo */}
           <View style={styleshome.homecontainerOp}>
 
-            {/* Foto */}
+            {/* FOTO DO PLAYER */}
             <View style={{ alignItems: "center", marginBottom: 20 }}>
               {photo ? (
                 <Image source={{ uri: photo }} style={styleshome.userImg} />
@@ -78,10 +38,10 @@ const Options = () => {
               )}
             </View>
 
-            {/* Nome do jogador */}
-            <Text style={stylesplayer.name}> {name} </Text>
+            {/* NOME */}
+            <Text style={stylesplayer.name}>{playerName}</Text>
 
-            {/* Ações */}
+            {/* AÇÕES */}
             <Link href="/Redefinir-Email" asChild>
               <TouchableOpacity style={styleshome.settingbullets}>
                 <Text style={styleshome.textbullets}>Trocar Senha</Text>
@@ -101,7 +61,7 @@ const Options = () => {
             </Link>
           </View>
 
-          {/* Rodapé */}
+          {/* RODAPÉ */}
           <View style={styleshome.bottomBar}>
             <Link href="/HomeDecker" asChild>
               <TouchableOpacity style={{ alignItems: "center" }}>
@@ -122,10 +82,9 @@ const Options = () => {
               </TouchableOpacity>
             </Link>
           </View>
+
         </ImageBackground>
       </SafeAreaView>
     </SafeAreaProvider>
   );
-};
-
-export default Options;
+}
